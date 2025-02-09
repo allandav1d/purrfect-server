@@ -1,0 +1,83 @@
+---
+description: Project pattern and organization
+globs: 
+---
+# Regras de Organização do Projeto Purrfect Server
+
+## Estrutura de Diretórios
+
+```
+purrfect-server/
+├── app/                    # Aplicação Next.js
+│   ├── src/               # Código fonte da aplicação
+│   ├── public/            # Arquivos públicos
+│   └── ...                # Outros arquivos de configuração Next.js
+│
+├── proxy/                  # Configuração do Nginx (Proxy Reverso)
+│   ├── conf.d/            # Configurações específicas dos sites
+│   ├── html/              # Páginas estáticas e de erro
+│   │   ├── images/        # Imagens para páginas estáticas
+│   │   ├── 404.html      # Página de erro 404
+│   │   └── 50x.html      # Página de erro 50x
+│   └── nginx.conf         # Configuração principal do Nginx
+│
+└── docker-compose.yml      # Configuração dos containers
+```
+
+## Regras Gerais
+
+1. **Organização de Código**
+   - Manter código fonte da aplicação em `app/src/`
+   - Configurações do Nginx em `proxy/conf.d/`
+   - Assets estáticos em `proxy/html/images/`
+
+2. **Páginas de Erro**
+   - Manter consistência visual entre páginas de erro
+   - Usar Tailwind CSS para estilização
+   - Suportar temas claro/escuro automaticamente
+   - Manter logos e imagens em SVG quando possível
+
+3. **Configuração Nginx**
+   - Separar configurações por domínio em arquivos distintos
+   - Incluir headers de segurança apropriados
+   - Configurar cache para assets estáticos
+   - Manter páginas de erro personalizadas
+
+4. **Padrões de Nomenclatura**
+   - Arquivos de configuração Nginx: `.conf`
+   - Páginas HTML: `.html`
+   - Imagens vetoriais: `.svg`
+   - Scripts: `.sh`
+
+5. **Versionamento**
+   - Ignorar arquivos de ambiente (.env)
+   - Ignorar diretórios de build e cache
+   - Manter configurações sensíveis fora do repositório
+
+6. **Temas e Estilos**
+   - Usar prefixo `logo-` para arquivos de logo
+   - Sufixo `-dark` para assets do tema escuro
+   - Sufixo `-light` para assets do tema claro
+
+7. **Segurança**
+   - Não expor informações sensíveis nas páginas de erro
+   - Configurar CORS apropriadamente
+   - Usar HTTPS para todas as conexões
+   - Implementar rate limiting quando necessário
+
+8. **Performance**
+   - Otimizar imagens antes de commit
+   - Usar CDN para assets quando possível
+   - Implementar cache adequado
+   - Minificar assets estáticos
+
+9. **Domínios e Subdomínios**
+   - Domínio principal: `purrfect-server.bytelabs.rocks`
+   - Subdomínios devem seguir o padrão `*.bytelabs.rocks`
+   - Redirecionar subdomínios não utilizados para 404
+
+10. **Manutenção**
+    - Manter documentação atualizada
+    - Revisar e atualizar configurações periodicamente
+    - Testar páginas de erro regularmente
+    - Monitorar logs de erro
