@@ -15,6 +15,13 @@
       "when": 1739083155581,
       "tag": "0001_wakeful_stephen_strange",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1739086928295,
+      "tag": "0002_burly_captain_flint",
+      "breakpoints": true
     }
   ]
 }

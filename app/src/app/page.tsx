@@ -3,14 +3,17 @@ import Image from "next/image"
 import Link from "next/link"
 
 import { LoginForm } from "@/components/auth/login-form"
+import { SetupForm } from "@/components/auth/setup-form"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { api } from "@/trpc/server"
 
 export const metadata: Metadata = {
-  title: "Login | Purrfect Server",
-  description: "Faça login para acessar o Purrfect Server",
+  title: "Purrfect Server",
+  description: "A solução perfeita para gerenciar seus servidores",
 }
+export default async function HomePage() {
+  const isConfigured = await api.setup.isConfigured()
 
-export default function HomePage() {
   return (
     <div className="container relative min-h-screen flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
       <div className="absolute top-4 right-4 z-50">
@@ -47,30 +50,34 @@ export default function HomePage() {
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[450px]">
           <div className="flex flex-col space-y-2 text-center">
             <h1 className="text-2xl font-semibold tracking-tight">
-              Bem-vindo de volta
+              {isConfigured ? "Bem-vindo de volta" : "Configuração Inicial"}
             </h1>
             <p className="text-sm text-muted-foreground">
-              Digite seu email e senha para acessar sua conta
+              {isConfigured
+                ? "Digite seu email e senha para acessar sua conta"
+                : "Configure seu primeiro usuário administrador para começar"}
             </p>
           </div>
-          <LoginForm />
-          <p className="px-8 text-center text-sm text-muted-foreground">
-            Ao clicar em continuar, você concorda com nossos{" "}
-            <Link
-              href="/terms"
-              className="underline underline-offset-4 hover:text-primary"
-            >
-              Termos de Serviço
-            </Link>{" "}
-            e{" "}
-            <Link
-              href="/privacy"
-              className="underline underline-offset-4 hover:text-primary"
-            >
-              Política de Privacidade
-            </Link>
-            .
-          </p>
+          {isConfigured ? <LoginForm /> : <SetupForm />}
+          {isConfigured && (
+            <p className="px-8 text-center text-sm text-muted-foreground">
+              Ao clicar em continuar, você concorda com nossos{" "}
+              <Link
+                href="/terms"
+                className="underline underline-offset-4 hover:text-primary"
+              >
+                Termos de Serviço
+              </Link>{" "}
+              e{" "}
+              <Link
+                href="/privacy"
+                className="underline underline-offset-4 hover:text-primary"
+              >
+                Política de Privacidade
+              </Link>
+              .
+            </p>
+          )}
         </div>
       </div>
     </div>
