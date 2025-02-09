@@ -11,6 +11,7 @@ import {
     Sparkles,
 } from "lucide-react"
 import { useTheme } from "next-themes"
+import { signOut } from "next-auth/react"
 
 import {
     Avatar,
@@ -33,6 +34,7 @@ import {
     useSidebar,
 } from "@/components/ui/sidebar"
 import { Skeleton } from "@/components/ui/skeleton"
+import { useRouter } from "next/navigation"
 export function NavUser({
     user,
     isLoading,
@@ -46,6 +48,7 @@ export function NavUser({
 }) {
     const { isMobile } = useSidebar()
     const { theme, setTheme } = useTheme()
+    const router = useRouter()
 
     if (isLoading) {
         return <Skeleton className="h-10 w-full" />
@@ -53,6 +56,11 @@ export function NavUser({
 
     if (!user) {
         return null
+    }
+
+    const handleSignOut = async () => {
+        await signOut({ callbackUrl: "/" })
+        router.push("/")
     }
 
     return (
@@ -112,7 +120,7 @@ export function NavUser({
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={handleSignOut}>
                             <LogOut />
                             Sair
                         </DropdownMenuItem>
