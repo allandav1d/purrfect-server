@@ -8,8 +8,11 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
+import { api } from "@/trpc/server"
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const info = await api.system.getSystemInfo()
+
   return (
     <>
       <header className="flex h-16 shrink-0 items-center gap-2">
@@ -35,6 +38,7 @@ export default function DashboardPage() {
           <div className="aspect-video rounded-xl bg-muted/50" />
           <div className="aspect-video rounded-xl bg-muted/50" />
         </div>
+        <pre>{JSON.stringify(info, null, 2)}</pre>
         <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
       </div>
     </>

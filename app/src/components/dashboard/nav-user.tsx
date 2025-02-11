@@ -35,6 +35,7 @@ import {
 } from "@/components/ui/sidebar"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useRouter } from "next/navigation"
+
 export function NavUser({
     user,
     isLoading,

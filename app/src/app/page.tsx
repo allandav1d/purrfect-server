@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: "A solução perfeita para gerenciar seus servidores",
 }
 export default async function HomePage() {
-  const isConfigured = await api.setup.isConfigured()
+  const isConfigured = await api.system.isConfigured()
 
   return (
     <div className="container relative min-h-screen flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
