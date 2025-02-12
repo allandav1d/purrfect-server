@@ -30,6 +30,7 @@ import {
 import { api } from "@/trpc/react"
 import { Suspense } from "react"
 import { Skeleton } from "@/components/ui/skeleton"
+import Image from "next/image"
 
 const data = {
   user: {
@@ -39,59 +40,59 @@ const data = {
   },
   navMain: [
     {
-      title: "Playground",
+      title: "Dashboard",
       url: "#",
       icon: SquareTerminal,
       isActive: true,
       items: [
         {
-          title: "History",
+          title: "Visão Geral",
           url: "#",
         },
         {
-          title: "Starred",
+          title: "Memória",
           url: "#",
         },
         {
-          title: "Settings",
+          title: "Processos",
           url: "#",
         },
       ],
     },
     {
-      title: "Models",
+      title: "Configurações",
       url: "#",
-      icon: Bot,
+      icon: Settings2,
       items: [
         {
-          title: "Genesis",
+          title: "Usuários",
           url: "#",
         },
         {
-          title: "Explorer",
+          title: "Grupos",
           url: "#",
         },
         {
-          title: "Quantum",
+          title: "Permissões",
           url: "#",
         },
       ],
     },
     {
-      title: "Documentation",
+      title: "Logs",
       url: "#",
       icon: BookOpen,
       items: [
         {
-          title: "Introduction",
+          title: "Erros",
           url: "#",
         },
         {
-          title: "Get Started",
+          title: "Avisos",
           url: "#",
         },
         {
-          title: "Tutorials",
+          title: "Logs",
           url: "#",
         },
         {
@@ -101,24 +102,24 @@ const data = {
       ],
     },
     {
-      title: "Settings",
+      title: "Servidores",
       url: "#",
       icon: Settings2,
       items: [
         {
-          title: "General",
+          title: "Servidores",
           url: "#",
         },
         {
-          title: "Team",
+          title: "Grupos",
           url: "#",
         },
         {
-          title: "Billing",
+          title: "Custos",
           url: "#",
         },
         {
-          title: "Limits",
+          title: "Limites",
           url: "#",
         },
       ],
@@ -126,7 +127,7 @@ const data = {
   ],
   navSecondary: [
     {
-      title: "Support",
+      title: "Suporte",
       url: "#",
       icon: LifeBuoy,
     },
@@ -138,17 +139,17 @@ const data = {
   ],
   projects: [
     {
-      name: "Design Engineering",
+      name: "Projeto 1",
       url: "#",
       icon: Frame,
     },
     {
-      name: "Sales & Marketing",
+      name: "Projeto 2",
       url: "#",
       icon: PieChart,
     },
     {
-      name: "Travel",
+      name: "Projeto 3",
       url: "#",
       icon: Map,
     },
@@ -156,8 +157,6 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-
-  const { data: user, isLoading } = api.auth.getMe.useQuery()
 
   
   return (
@@ -167,8 +166,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <a href="#">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <Command className="size-4" />
+                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-background">
+                  <Image src="/logo/logo-dark.svg" alt="Purrfect Server" width={32} height={32} className="hidden dark:block" />
+                  <Image src="/logo/logo-light.svg" alt="Purrfect Server" width={32} height={32} className="block dark:hidden" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">Purrfect Server</span>
@@ -185,7 +185,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-          <NavUser user={user} isLoading={isLoading} />
+          <NavUser />
       </SidebarFooter>
     </Sidebar>
   )

@@ -1,17 +1,11 @@
-import { z } from "zod"
-import { hash } from "bcrypt"
-import { v4 as uuidv4 } from "uuid"
-
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "@/server/api/trpc"
-import { users } from "@/server/db/schema"
-import { eq } from "drizzle-orm"
-import { getSystemInfo } from "@/server/services/system-info.service"
+import { createTRPCRouter } from "@/server/api/trpc"
 import isConfiguredRouter from "./is-configured"
-import initializeRouter from "./initialize" 
-import infoRouter from "./info"
+import initializeRouter from "./initialize"
+import { systemInfoRouter } from "./info"
+
 export const systemRouter = createTRPCRouter({
   // System protected procedures
-  getSystemInfo: infoRouter,
+  getSystemInfo: systemInfoRouter,
 
   // System public procedures
   isConfigured: isConfiguredRouter,

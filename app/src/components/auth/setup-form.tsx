@@ -23,7 +23,7 @@ export function SetupForm() {
   const [error, setError] = useState("")
   const [imagePreview, setImagePreview] = useState<string | null>(null)
 
-  const setup = api.setup.initialize.useMutation({
+  const setup = api.system.initialize.useMutation({
     onSuccess: () => {
       router.refresh()
     },

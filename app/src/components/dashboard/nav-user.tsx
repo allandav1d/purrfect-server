@@ -35,28 +35,17 @@ import {
 } from "@/components/ui/sidebar"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useRouter } from "next/navigation"
+import { api } from "@/trpc/react"
 
-export function NavUser({
-    user,
-    isLoading,
-}: {
-    user: {
-        name: string
-        email: string
-        image: string | null
-    }
-    isLoading: boolean
-}) {
+export function NavUser() {
     const { isMobile } = useSidebar()
     const { theme, setTheme } = useTheme()
     const router = useRouter()
 
+    const { data: user, isLoading } = api.auth.getMe.useQuery()
+
     if (isLoading) {
         return <Skeleton className="h-10 w-full" />
-    }
-
-    if (!user) {
-        return null
     }
 
     const handleSignOut = async () => {
