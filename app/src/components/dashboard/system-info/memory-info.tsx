@@ -8,7 +8,7 @@ export function MemoryInfo() {
     const { data, status } = api.system.getSystemInfo.subscription.useSubscription({
         interval: 1000, // every 1 second
         data: {
-            mem: 'free, total, used, available, swapused, swaptotal, active'
+            mem: 'free, total, used, available, swapused, swaptotal, active',
         }
     });
 

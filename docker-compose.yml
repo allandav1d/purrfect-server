@@ -4,6 +4,7 @@ services:
   web:
     image: nginx:latest
     container_name: nginx
+    restart: always
     ports:
       - "80:80"
       - "443:443"
@@ -11,23 +12,25 @@ services:
       - ./proxy/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./proxy/conf.d:/etc/nginx/conf.d:ro
       - ./proxy/html:/usr/share/nginx/html:ro
-    depends_on:
-      - app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  #  depends_on:
+  #    - app
 
-  app:
-    build:
-      context: ./app
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    restart: always
-    volumes:
-      - ./app:/app
-      - /app/node_modules
-    environment:
-      - DATABASE_URL=postgres://user:password@db:5432/mydatabase
-    depends_on:
-      - db
+  #app:
+  #  build:
+  #    context: ./app
+  #    dockerfile: Dockerfile
+  #  ports:
+  #    - "3000:3000"
+  #  restart: always
+  #  volumes:
+  #    - ./app:/app
+  #    - /app/node_modules
+  #  environment:
+  #    - DATABASE_URL=postgres://user:password@db:5432/mydatabase
+  #  depends_on:
+  #    - db
 
   db:
     image: postgres:13

@@ -7,7 +7,7 @@ import { SystemOverview } from './system-overview';
 import { CpuInfo } from './cpu-info';
 import { MemoryInfo } from './memory-info';
 import { NetworkInfo } from './network-info';
-
+import { DiskInfo } from './disk-info';
 export function SystemInfo() {
     return (
         <>
@@ -19,11 +19,11 @@ export function SystemInfo() {
                 <CpuInfo />
                 <MemoryInfo />
                 <NetworkInfo />
-                {/*<DiskInfo />*/}
             </div>
 
 
             <div className="w-full">
+                <DiskInfo />
                 {/* <DockerInfo /> */}
             </div>
         </>
