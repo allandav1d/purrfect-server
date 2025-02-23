@@ -13,6 +13,15 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 - Improve UI with breadcrumbs and tutorial dialog
 - Add input validation for domain entry
 - Refactor domain management page layout and interactions
+
+### Adicionado
+- **domains**: Enhance domain management with validation and confirmation
+
+- Add domain validation with regex and error handling
+- Implement domain deletion confirmation dialog
+- Improve UI with breadcrumbs and tutorial dialog
+- Add input validation for domain entry
+- Refactor domain management page layout and interactions
 ## [0.0.28] - 2025-02-23
 - Add `check_sync()` function to improve remote branch synchronization logic
 - Add final synchronization verification before push

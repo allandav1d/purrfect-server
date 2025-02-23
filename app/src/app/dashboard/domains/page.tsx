@@ -300,7 +300,7 @@ export default function DomainsPage() {
       </Card>
 
       <Card>
-        <CardContent>
+        <CardContent className="p-0">
           <Table>
             <TableHeader>
               <TableRow>
@@ -308,7 +308,7 @@ export default function DomainsPage() {
                 <TableHead>Status Geral</TableHead>
                 <TableHead>IPv4</TableHead>
                 <TableHead>IPv6</TableHead>
-                <TableHead>DNS Reverso</TableHead>
+                {/* <TableHead>DNS Reverso</TableHead> */}
                 <TableHead>Última Verificação</TableHead>
                 <TableHead>Ações</TableHead>
               </TableRow>
@@ -356,7 +356,7 @@ export default function DomainsPage() {
                       {domain.ipv6Status}
                     </span>
                   </TableCell>
-                  <TableCell>
+{/*                   <TableCell>
                     <span
                       className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
                         domain.dnsStatus === "active"
@@ -368,7 +368,7 @@ export default function DomainsPage() {
                     >
                       {domain.dnsStatus}
                     </span>
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell>
                     {domain.lastCheck
                       ? new Date(domain.lastCheck).toLocaleString()

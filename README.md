@@ -160,7 +160,7 @@ purrfect-server/
 - [x] API endpoints
 - [ ] Basic Docker container management
 - [ ] Container logs viewer
-- [ ] Simple domain management
+- [x] Simple domain management
 - [ ] Basic SSL certificate automation
 - [ ] Email notifications
 - [ ] Comprehensive documentation
