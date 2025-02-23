@@ -56,14 +56,6 @@ export function NetworkInfo() {
 
   const defaultInterface = networkInterfaces?.find((iface: any) => iface.iface === networkInterfaceDefault);
 
-  console.log(defaultInterface);
-
-  console.log(networkInterfaces);
-  console.log(networkInterfaceDefault);
-  /*   console.log(networkGatewayDefault);
-    console.log(inetChecksite);
-    console.log(networkStats); */
-
   if (!networkStats) {
     return (
       <Card>

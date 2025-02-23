@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../../trpc";
-import si, { Systeminformation } from 'systeminformation';
+import si from 'systeminformation';
 
 export type SystemType = {
     [key: string]: string | number | boolean | undefined;

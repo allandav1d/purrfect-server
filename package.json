@@ -1,1 +1,20 @@
-{}
+{
+    "version": "0.0.1",
+    "name": "purrfect-server",
+    "description": "Purrfect Server is a versatile management solution designed to work seamlessly across different environments. Whether you're managing local development setups, bare metal servers, or cloud instances, it provides a unified interface for all your server management needs.",
+    "scripts": {
+        "version:major": "bun version major -m \"chore: bump version to %s\"",
+        "version:minor": "bun version minor -m \"chore: bump version to %s\"",
+        "version:patch": "bun version patch -m \"chore: bump version to %s\"",
+        "prepare": "./scripts/setup-hooks.sh"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/bytelabs-rocks/purrfect-server.git"
+    },
+    "engines": {
+        "bun": ">=1.2.2"
+    },
+    "author": "ByteLabs",
+    "license": "Apache-2.0"
+}

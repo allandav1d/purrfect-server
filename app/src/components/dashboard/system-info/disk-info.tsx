@@ -84,8 +84,6 @@ export function DiskInfo() {
     })
   }));
 
-  console.log("sortedGroupedDisks", sortedGroupedDisks);
-
   return (
     <Card>
       <CardHeader className="pb-2">

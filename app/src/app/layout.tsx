@@ -7,6 +7,7 @@ import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "@/trpc/react";
 import { Providers } from "./providers";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Purrfect-Server",
@@ -34,6 +35,7 @@ export default function RootLayout({
           <TRPCReactProvider>
             {children}
           </TRPCReactProvider>
+          <Toaster />
         </Providers>
       </body>
     </html>

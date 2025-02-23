@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Verifica se existe conteúdo em [Não publicado]
+if grep -q "## \[Não publicado\]" CHANGELOG.md; then
+    # Obtém a versão atual do package.json
+    VERSION=$(node -p "require('./package.json').version")
+    DATE=$(date +%Y-%m-%d)
+    
+    # Substitui [Não publicado] pela nova versão
+    sed -i "s/## \[Não publicado\]/## [$VERSION] - $DATE\n\n## [Não publicado]/" CHANGELOG.md
+    
+    # Adiciona as alterações do changelog
+    git add CHANGELOG.md
+    git commit --amend --no-edit
+fi 

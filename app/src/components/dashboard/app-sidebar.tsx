@@ -12,6 +12,7 @@ import {
   Send,
   Settings2,
   SquareTerminal,
+  Globe,
 } from "lucide-react"
 
 import { NavMain } from "@/components/dashboard/nav-main"
@@ -60,10 +61,19 @@ const data = {
       ],
     },
     {
+      title: "Domínios",
+      url: "/dashboard/domains",
+      icon: Globe,
+    },
+    {
       title: "Configurações",
       url: "#",
       icon: Settings2,
       items: [
+        {
+          title: "Servidor",
+          url: "/dashboard/settings/server",
+        },
         {
           title: "Usuários",
           url: "#",

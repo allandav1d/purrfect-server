@@ -7,6 +7,7 @@ import {
   text,
   timestamp,
   varchar,
+  boolean,
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
@@ -108,3 +109,46 @@ export const verificationTokens = createTable(
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
   })
 );
+
+export const domains = createTable("domain", {
+  id: varchar("id", { length: 255 })
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  domain: varchar("domain", { length: 255 }).notNull(),
+  status: varchar("status", { length: 20 }).default("pending"),
+  ipv4Status: varchar("ipv4_status", { length: 20 }).default("pending"),
+  ipv6Status: varchar("ipv6_status", { length: 20 }).default("pending"),
+  dnsStatus: varchar("dns_status", { length: 20 }).default("pending"),
+  lastCheck: timestamp("last_check", {
+    mode: "date",
+    withTimezone: true,
+  }),
+  createdAt: timestamp("created_at", {
+    mode: "date",
+    withTimezone: true,
+  }).default(sql`CURRENT_TIMESTAMP`),
+  userId: varchar("user_id", { length: 255 })
+    .notNull()
+    .references(() => users.id),
+});
+
+export const serverSettings = createTable("server_settings", {
+  id: varchar("id", { length: 255 })
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  key: varchar("key", { length: 255 }).notNull().unique(),
+  value: text("value").notNull(),
+  description: text("description"),
+  type: varchar("type", { length: 50 }).notNull(), // string, number, boolean, json
+  isSystem: boolean("is_system").default(false),
+  updatedAt: timestamp("updated_at", {
+    mode: "date",
+    withTimezone: true,
+  }).default(sql`CURRENT_TIMESTAMP`),
+  createdAt: timestamp("created_at", {
+    mode: "date",
+    withTimezone: true,
+  }).default(sql`CURRENT_TIMESTAMP`),
+});
