@@ -6,6 +6,16 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 
 ## [Não publicado]
 
+## [0.1.0] - 2025-02-23
+
+### Adicionado
+- **hooks**: Add comprehensive pre-commit and pre-push Git hooks
+
+- Implement pre-commit hook with version and changelog management
+- Create pre-push hook to validate changelog and version synchronization
+- Update setup-hooks.sh script to support multiple hooks installation
+- Add color-coded output and detailed validation checks
+
 ## [0.0.11] - 2025-02-23
 ### Adicionado
 - Configuração do Bun como runtime padrão

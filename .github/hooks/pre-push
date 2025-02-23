@@ -15,16 +15,51 @@ if git rev-list @{u}.. --count | grep -q "^0$"; then
 fi
 
 # Verifica se o branch está sincronizado com o remoto
+echo -e "${YELLOW}Verificando sincronização com o remoto...${NC}"
 git fetch origin
+
 LOCAL=$(git rev-parse @)
 REMOTE=$(git rev-parse @{u})
 BASE=$(git merge-base @ @{u})
 
 if [ $LOCAL = $REMOTE ]; then
-    echo -e "${GREEN}Branch está atualizado${NC}"
+    echo -e "${GREEN}✓ Branch está atualizado${NC}"
 elif [ $LOCAL = $BASE ]; then
-    echo -e "${RED}Erro: Você precisa fazer pull antes de push${NC}"
+    echo -e "${RED}Erro: Branch local está atrás do remoto. Execute 'git pull' primeiro.${NC}"
     exit 1
+elif [ $REMOTE = $BASE ]; then
+    echo -e "${GREEN}✓ Branch local está à frente do remoto${NC}"
+else
+    # Tenta fazer rebase automático
+    echo -e "${YELLOW}Tentando sincronizar automaticamente...${NC}"
+    
+    # Salva alterações atuais
+    git stash push -m "backup antes de sincronizar"
+    
+    # Tenta fazer rebase
+    if git pull --rebase origin main; then
+        echo -e "${GREEN}✓ Rebase realizado com sucesso${NC}"
+        
+        # Restaura alterações
+        if git stash list | grep -q "backup antes de sincronizar"; then
+            git stash pop
+            echo -e "${GREEN}✓ Alterações locais restauradas${NC}"
+        fi
+    else
+        # Se falhar, restaura estado anterior
+        git rebase --abort
+        if git stash list | grep -q "backup antes de sincronizar"; then
+            git stash pop
+        fi
+        echo -e "${RED}Erro: Não foi possível sincronizar automaticamente.${NC}"
+        echo -e "${YELLOW}Por favor, resolva os conflitos manualmente:${NC}"
+        echo -e "1. git pull origin main"
+        echo -e "2. Resolva os conflitos"
+        echo -e "3. git add ."
+        echo -e "4. git commit"
+        echo -e "5. Tente o push novamente"
+        exit 1
+    fi
 fi
 
 # Verifica se o changelog está correto
