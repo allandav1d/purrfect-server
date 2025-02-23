@@ -87,12 +87,6 @@ export const domainsRouter = createTRPCRouter({
           ? "active" 
           : "failed";
 
-        console.log('domain', domain);
-        console.log('status', status);
-        console.log('ipv4Status', ipv4Status);
-        console.log('ipv6Status', ipv6Status);
-        console.log('dnsStatus', dnsStatus);
-
         // Atualizar banco de dados
         await ctx.db
           .update(domains)

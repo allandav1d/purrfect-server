@@ -35,6 +35,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Copyable } from "@/components/ui/copyable";
 
 const domainProviders = [
   { id: "cloudflare", name: "Cloudflare", tutorialUrl: "https://cloudflare.com/pt-br/dns" },
@@ -50,7 +51,13 @@ export default function DomainsPage() {
   const utils = api.useUtils();
 
   const { data: domains, isLoading } = api.domains.getAll.useQuery();
-  
+
+  // get server ipv4 and ipv6
+  const { data: serverSettings } = api.settings.get.useQuery({ key: "server_ipv4" });
+  const serverIpv4 = serverSettings?.value;
+  const { data: serverSettingsIpv6 } = api.settings.get.useQuery({ key: "server_ipv6" });
+  const serverIpv6 = serverSettingsIpv6?.value;
+
   const createDomain = api.domains.create.useMutation({
     onSuccess: () => {
       setNewDomain("");
@@ -106,9 +113,23 @@ export default function DomainsPage() {
               <div className="flex flex-col gap-2">
                 <p>Informações do Servidor:</p>
                 <ul className="list-disc list-inside space-y-1">
-                  <li>IPv4: <code className="bg-muted px-1 py-0.5 rounded">148.251.177.45</code></li>
-                  {process.env.SERVER_IPV6 && (
-                    <li>IPv6: <code className="bg-muted px-1 py-0.5 rounded">{process.env.SERVER_IPV6}</code></li>
+                  {serverIpv4 && (
+                    <li>
+                      <Copyable
+                        text={serverIpv4}
+                        label="IPv4"
+                        toastMessage="Endereço IPv4 copiado!"
+                      />
+                    </li>
+                  )}
+                  {serverIpv6 && (
+                    <li>
+                      <Copyable
+                        text={serverIpv6}
+                        label="IPv6"
+                        toastMessage="Endereço IPv6 copiado!"
+                      />
+                    </li>
                   )}
                 </ul>
               </div>
