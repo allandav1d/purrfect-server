@@ -6,6 +6,28 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
+# Função para verificar sincronização
+check_sync() {
+    git fetch origin
+    LOCAL=$(git rev-parse @)
+    REMOTE=$(git rev-parse @{u})
+    BASE=$(git merge-base @ @{u})
+
+    if [ $LOCAL = $REMOTE ]; then
+        echo -e "${GREEN}✓ Branch está atualizado${NC}"
+        return 0
+    elif [ $LOCAL = $BASE ]; then
+        echo -e "${RED}Branch local está atrás do remoto${NC}"
+        return 1
+    elif [ $REMOTE = $BASE ]; then
+        echo -e "${YELLOW}Branch local está à frente do remoto${NC}"
+        return 2
+    else
+        echo -e "${RED}Branches divergiram${NC}"
+        return 3
+    fi
+}
+
 echo -e "${YELLOW}Validando antes do push...${NC}"
 
 # Verifica se há commits para enviar
@@ -14,22 +36,15 @@ if git rev-list @{u}.. --count | grep -q "^0$"; then
     exit 1
 fi
 
-# Verifica se o branch está sincronizado com o remoto
+# Verifica sincronização inicial
 echo -e "${YELLOW}Verificando sincronização com o remoto...${NC}"
-git fetch origin
+check_sync
+SYNC_STATUS=$?
 
-LOCAL=$(git rev-parse @)
-REMOTE=$(git rev-parse @{u})
-BASE=$(git merge-base @ @{u})
-
-if [ $LOCAL = $REMOTE ]; then
-    echo -e "${GREEN}✓ Branch está atualizado${NC}"
-elif [ $LOCAL = $BASE ]; then
+if [ $SYNC_STATUS -eq 1 ]; then
     echo -e "${RED}Erro: Branch local está atrás do remoto. Execute 'git pull' primeiro.${NC}"
     exit 1
-elif [ $REMOTE = $BASE ]; then
-    echo -e "${GREEN}✓ Branch local está à frente do remoto${NC}"
-else
+elif [ $SYNC_STATUS -eq 3 ]; then
     # Tenta fazer rebase automático
     echo -e "${YELLOW}Tentando sincronizar automaticamente...${NC}"
     
@@ -128,6 +143,19 @@ fi
 # Verifica se ainda estamos em versão beta
 if [[ $PACKAGE_VERSION =~ ^0\. ]]; then
     echo -e "${YELLOW}Projeto em fase beta (v$PACKAGE_VERSION)${NC}"
+fi
+
+# Verifica sincronização final
+echo -e "${YELLOW}Verificando sincronização final...${NC}"
+check_sync
+FINAL_SYNC_STATUS=$?
+
+if [ $FINAL_SYNC_STATUS -eq 2 ]; then
+    echo -e "${YELLOW}Aguardando push ser concluído...${NC}"
+elif [ $FINAL_SYNC_STATUS -ne 0 ]; then
+    echo -e "${RED}Erro: Repositório não está sincronizado após as alterações${NC}"
+    echo -e "${YELLOW}Execute 'git pull' e tente novamente${NC}"
+    exit 1
 fi
 
 echo -e "${GREEN}Tudo validado com sucesso!${NC}"

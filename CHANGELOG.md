@@ -5,14 +5,20 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 ## [Não publicado]
 
+### Adicionado
+- **hooks**: Enhance pre-push synchronization checks
+
+- Add `check_sync()` function to improve remote branch synchronization logic
+- Implement detailed branch status checks with color-coded output
+- Add final synchronization verification before push
+- Improve error handling for branch synchronization scenarios
+## [0.0.26] - 2025-02-23
+- Add unique sorting to unpublished content extraction
 ### Alterado
 - **hooks**: Optimize changelog deduplication and sorting
-
-- Add unique sorting to unpublished content extraction
 - Implement deduplication of changelog entries during version update
 - Improve changelog management to prevent duplicate entries
 ## [0.0.24] - 2025-02-23
-### Alterado
 - Atualização de versão para 0.0.24
 ## [0.0.22] - 2025-02-23
 - Atualização de versão para 0.0.22
