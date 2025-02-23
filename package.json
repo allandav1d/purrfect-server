@@ -1,5 +1,5 @@
 {
-    "version": "0.1.0",
+    "version": "0.2.0",
     "name": "purrfect-server",
     "description": "Purrfect Server is a versatile management solution designed to work seamlessly across different environments. Whether you're managing local development setups, bare metal servers, or cloud instances, it provides a unified interface for all your server management needs.",
     "scripts": {

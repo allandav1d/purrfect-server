@@ -6,6 +6,17 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 
 ## [Não publicado]
 
+## [0.2.0] - 2025-02-23
+
+### Adicionado
+- **hooks**: Enhance pre-push hook with advanced remote synchronization
+
+- Improve remote branch synchronization checks
+- Add automatic rebase and stash handling
+- Implement detailed error messages and recovery guidance
+- Enhance console output with color-coded status indicators
+
+
 ## [0.1.0] - 2025-02-23
 
 ### Adicionado
