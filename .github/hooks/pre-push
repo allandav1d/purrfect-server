@@ -88,6 +88,7 @@ if [ -n "$UNPUBLISHED_CONTENT" ]; then
     # Adiciona a nova seção de versão
     echo "## [$PACKAGE_VERSION] - $DATE" >> "$TMP_FILE"
     echo "$UNPUBLISHED_CONTENT" >> "$TMP_FILE"
+    echo "" >> "$TMP_FILE"
     
     # Adiciona o resto do changelog
     sed -n '/## \[[0-9]/,$p' CHANGELOG.md >> "$TMP_FILE"
@@ -112,6 +113,11 @@ if [ "$PACKAGE_VERSION" = "$CHANGELOG_VERSION" ]; then
 else
     echo -e "${RED}Erro: Versão no package.json ($PACKAGE_VERSION) não corresponde à versão no changelog ($CHANGELOG_VERSION)${NC}"
     exit 1
+fi
+
+# Verifica se ainda estamos em versão beta
+if [[ $PACKAGE_VERSION =~ ^0\. ]]; then
+    echo -e "${YELLOW}Projeto em fase beta (v$PACKAGE_VERSION)${NC}"
 fi
 
 echo -e "${GREEN}Tudo validado com sucesso!${NC}"

@@ -25,7 +25,7 @@ if ! echo "$COMMIT_MSG" | grep -qE "$PATTERN"; then
     echo -e "${RED}Erro: Mensagem de commit inválida${NC}"
     echo -e "${YELLOW}A mensagem deve seguir o padrão: <tipo>(escopo opcional): <descrição>${NC}"
     echo -e "\nTipos permitidos:"
-    echo -e "${GREEN}feat${NC}     : Nova funcionalidade (minor)"
+    echo -e "${GREEN}feat${NC}     : Nova funcionalidade (patch durante beta, minor após v1.0.0)"
     echo -e "${GREEN}fix${NC}      : Correção de bug (patch)"
     echo -e "${GREEN}docs${NC}     : Documentação"
     echo -e "${GREEN}style${NC}    : Formatação"
@@ -53,24 +53,46 @@ echo -e "${YELLOW}Atualizando versão...${NC}"
 CURRENT_VERSION=$(node -p "require('./package.json').version")
 echo "Versão atual: $CURRENT_VERSION"
 
+# Durante a fase beta (0.x.x), todos os commits incrementam o patch
+# TODO: Após v1.0.0, remover este bloco e usar o case abaixo
+if [[ $CURRENT_VERSION =~ ^0\. ]]; then
+    NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. '{print $1"."$2"."($3+1)}')
+    echo -e "${YELLOW}Fase beta: incrementando patch version${NC}"
+else
+    # TODO: Após v1.0.0, descomentar e usar este bloco
+    # case "$COMMIT_TYPE" in
+    #     feat|feature)
+    #         NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. '{print $1"."($2+1)".0"}')
+    #         ;;
+    #     fix|bugfix|*) # Durante beta, qualquer alteração é patch
+    #         NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. '{print $1"."$2"."($3+1)}')
+    #         ;;
+    # esac
+    NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. '{print $1"."$2"."($3+1)}')
+fi
+
+# Define a seção do changelog baseado no tipo do commit
 case "$COMMIT_TYPE" in
     feat|feature)
-        NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. '{print $1"."($2+1)".0"}')
         SECTION="Adicionado"
         ;;
     fix|bugfix)
-        NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. '{print $1"."$2"."($3+1)}')
         SECTION="Corrigido"
         ;;
+    change|refactor)
+        SECTION="Alterado"
+        ;;
+    remove)
+        SECTION="Removido"
+        ;;
+    docs)
+        SECTION="Documentação"
+        ;;
+    perf)
+        SECTION="Performance"
+        ;;
     *)
-        NEW_VERSION=$CURRENT_VERSION
-        case "$COMMIT_TYPE" in
-            change|refactor) SECTION="Alterado" ;;
-            remove) SECTION="Removido" ;;
-            docs) SECTION="Documentação" ;;
-            perf) SECTION="Performance" ;;
-            *) SECTION="" ;;
-        esac
+        SECTION=""
         ;;
 esac
 
@@ -115,14 +137,6 @@ if [ -n "$SECTION" ]; then
     # Substitui o changelog antigo
     mv "$TMP_FILE" CHANGELOG.md
     echo -e "${GREEN}✓ Changelog atualizado${NC}"
-    
-    # Se a versão mudou, cria uma nova seção no changelog
-    if [ "$NEW_VERSION" != "$CURRENT_VERSION" ]; then
-        echo -e "${YELLOW}Criando nova seção de versão no changelog...${NC}"
-        DATE=$(date +%Y-%m-%d)
-        sed -i "s/## \[Não publicado\]/## \[Não publicado\]\n\n## \[$NEW_VERSION\] - $DATE/" CHANGELOG.md
-        echo -e "${GREEN}✓ Nova seção de versão criada${NC}"
-    fi
 fi
 
 # Adiciona as alterações ao staging

@@ -6,7 +6,15 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 
 ## [Não publicado]
 
-## [0.2.0] - 2025-02-23
+## [0.0.14] - 2025-02-23
+### Adicionado
+- **hooks**: Improve changelog management in pre-push hook
+- Enhance changelog update logic to automatically move unpublished changes
+- Add version and date detection for changelog entries
+- Implement automatic changelog formatting and version synchronization
+- Improve error handling and output messaging
+
+## [0.0.13] - 2025-02-23
 
 ### Adicionado
 - **hooks**: Enhance pre-push hook with advanced remote synchronization
@@ -17,7 +25,7 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 - Enhance console output with color-coded status indicators
 
 
-## [0.1.0] - 2025-02-23
+## [0.0.12] - 2025-02-23
 
 ### Adicionado
 - **hooks**: Add comprehensive pre-commit and pre-push Git hooks
