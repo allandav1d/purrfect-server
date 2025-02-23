@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { api } from "@/trpc/react";
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { api } from "@/trpc/react"
 import {
   Card,
   CardContent,
@@ -11,10 +11,10 @@ import {
   CardHeader,
   CardTitle,
   CardFooter,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
+} from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { toast } from "sonner"
 import {
   Form,
   FormControl,
@@ -23,20 +23,20 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from "@/components/ui/form"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
-import { Save } from "lucide-react";
-import { useEffect } from "react";
-import { defaultSettings } from "@/lib/default-settings";
+} from "@/components/ui/select"
+import { Separator } from "@/components/ui/separator"
+import { Save } from "lucide-react"
+import { useEffect } from "react"
+import { defaultSettings } from "@/lib/default-settings"
 const serverConfigSchema = z.object({
-    main_domain: z.string().min(1, {
+  main_domain: z.string().min(1, {
     message: "O domínio é obrigatório.",
   }),
   server_name: z.string().min(1, {
@@ -45,23 +45,26 @@ const serverConfigSchema = z.object({
   timezone: z.string().min(1, {
     message: "O fuso horário é obrigatório.",
   }),
-  server_ipv4: z.string().min(7, {
-    message: "IPv4 inválido.",
-  }).max(15),
+  server_ipv4: z
+    .string()
+    .min(7, {
+      message: "IPv4 inválido.",
+    })
+    .max(15),
   server_ipv6: z.string().optional(),
-});
+})
 
-type ServerConfigForm = z.infer<typeof serverConfigSchema>;
+type ServerConfigForm = z.infer<typeof serverConfigSchema>
 
 export function ConfigurationTab() {
-  const utils = api.useUtils();
-  const { data: settings } = api.settings.getAll.useQuery();
+  const utils = api.useUtils()
+  const { data: settings } = api.settings.getAll.useQuery()
 
   const updateSetting = api.settings.bulkUpsert.useMutation({
     onSuccess: () => {
-      void utils.settings.getAll.invalidate();
+      void utils.settings.getAll.invalidate()
     },
-  });
+  })
 
   const form = useForm<ServerConfigForm>({
     resolver: zodResolver(serverConfigSchema),
@@ -71,56 +74,59 @@ export function ConfigurationTab() {
       timezone: "",
       server_ipv4: "",
       server_ipv6: "",
-    }
-  });
+    },
+  })
 
   // Atualiza o formulário quando os settings são carregados
   useEffect(() => {
     if (settings) {
       const values = settings.reduce((acc: any, curr) => {
-        acc[curr.key] = curr.value ?? ""; // Garante que nunca será undefined
-        return acc;
-      }, {});
-      
-      form.reset(values);
+        acc[curr.key] = curr.value ?? "" // Garante que nunca será undefined
+        return acc
+      }, {})
+
+      form.reset(values)
     }
-  }, [settings, form]);
+  }, [settings, form])
 
   // 2. Define a função de submit
   async function onSubmit(data: ServerConfigForm) {
     try {
       // Garante que todos os valores são strings e remove espaços em branco
       const settingsToUpdate = Object.entries(data).map(([key, value]) => {
-        const stringValue = String(value || "").trim();
-        console.log(`Preparando setting - Key: ${key}, Value: ${stringValue}`);
-        
+        const stringValue = String(value || "").trim()
+        console.log(`Preparando setting - Key: ${key}, Value: ${stringValue}`)
+
         // Busca as informações padrão da configuração
-        const defaultSetting = defaultSettings.find(ds => ds.key === key);
-        
+        const defaultSetting = defaultSettings.find((ds) => ds.key === key)
+
         return {
           key,
           value: stringValue,
           type: "string" as const,
           description: defaultSetting?.description,
           isSystem: defaultSetting?.isSystem,
-        };
-      });
+        }
+      })
 
-      console.log("Dados a serem atualizados:", settingsToUpdate);
+      console.log("Dados a serem atualizados:", settingsToUpdate)
 
-      const result = await updateSetting.mutateAsync(settingsToUpdate);
-      console.log("Resultado da atualização:", result);
+      const result = await updateSetting.mutateAsync(settingsToUpdate)
+      console.log("Resultado da atualização:", result)
 
       if (result) {
-        toast.success("Configurações salvas com sucesso");
+        toast.success("Configurações salvas com sucesso")
         // Força uma atualização dos dados
-        await utils.settings.getAll.invalidate();
+        await utils.settings.getAll.invalidate()
       } else {
-        toast.error("Nenhum dado foi atualizado");
+        toast.error("Nenhum dado foi atualizado")
       }
     } catch (error) {
-      console.error("Erro detalhado:", error);
-      toast.error("Erro ao salvar as configurações: " + (error instanceof Error ? error.message : "Erro desconhecido"));
+      console.error("Erro detalhado:", error)
+      toast.error(
+        "Erro ao salvar as configurações: " +
+          (error instanceof Error ? error.message : "Erro desconhecido"),
+      )
     }
   }
 
@@ -130,9 +136,7 @@ export function ConfigurationTab() {
         <Card>
           <CardHeader>
             <CardTitle>Configurações do Servidor</CardTitle>
-            <CardDescription>
-              Configurações básicas do servidor
-            </CardDescription>
+            <CardDescription>Configurações básicas do servidor</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid gap-4 md:grid-cols-2">
@@ -176,20 +180,23 @@ export function ConfigurationTab() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Fuso Horário</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Selecione o fuso horário" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="America/Sao_Paulo">América/São Paulo</SelectItem>
+                        <SelectItem value="America/Sao_Paulo">
+                          América/São Paulo
+                        </SelectItem>
                         <SelectItem value="UTC">UTC</SelectItem>
                       </SelectContent>
                     </Select>
-                    <FormDescription>
-                      Fuso horário do servidor
-                    </FormDescription>
+                    <FormDescription>Fuso horário do servidor</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -225,9 +232,9 @@ export function ConfigurationTab() {
                     <FormItem>
                       <FormLabel>IPv6</FormLabel>
                       <FormControl>
-                        <Input 
-                          placeholder="0000:0000:0000:0000:0000:0000:0000:0000" 
-                          {...field} 
+                        <Input
+                          placeholder="0000:0000:0000:0000:0000:0000:0000:0000"
+                          {...field}
                         />
                       </FormControl>
                       <FormDescription>
@@ -239,12 +246,14 @@ export function ConfigurationTab() {
                 />
               </div>
             </div>
-          <Separator />
+            <Separator />
           </CardContent>
           <CardFooter className="flex justify-end">
             <Button type="submit" disabled={form.formState.isSubmitting}>
               <Save className="mr-2 h-4 w-4" />
-              {form.formState.isSubmitting ? "Salvando..." : "Salvar Alterações"}
+              {form.formState.isSubmitting
+                ? "Salvando..."
+                : "Salvar Alterações"}
             </Button>
           </CardFooter>
         </Card>
@@ -258,11 +267,13 @@ export function ConfigurationTab() {
           </CardHeader>
           <CardContent>
             <div className="flex items-center justify-center p-8 text-center text-muted-foreground">
-              <p>Novas configurações estarão disponíveis em atualizações futuras</p>
+              <p>
+                Novas configurações estarão disponíveis em atualizações futuras
+              </p>
             </div>
           </CardContent>
         </Card>
       </form>
     </Form>
-  );
-} 
+  )
+}

@@ -37,9 +37,9 @@ export function NavMain({
   const [openItems, setOpenItems] = useState<Record<string, boolean>>({})
 
   const toggleItem = (title: string) => {
-    setOpenItems(prev => ({
+    setOpenItems((prev) => ({
       ...prev,
-      [title]: !prev[title]
+      [title]: !prev[title],
     }))
   }
 
@@ -48,16 +48,21 @@ export function NavMain({
       <SidebarGroupLabel>Plataforma</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
-          <Collapsible 
-            key={item.title} 
-            asChild 
+          <Collapsible
+            key={item.title}
+            asChild
             defaultOpen={item.isActive}
             open={item.items?.length ? openItems[item.title] : undefined}
-            onOpenChange={item.items?.length ? () => toggleItem(item.title) : undefined}
+            onOpenChange={
+              item.items?.length ? () => toggleItem(item.title) : undefined
+            }
           >
             <SidebarMenuItem>
               {item.items?.length ? (
-                <SidebarMenuButton tooltip={item.title} onClick={() => toggleItem(item.title)}>
+                <SidebarMenuButton
+                  tooltip={item.title}
+                  onClick={() => toggleItem(item.title)}
+                >
                   <item.icon />
                   <span>{item.title}</span>
                 </SidebarMenuButton>
@@ -98,4 +103,4 @@ export function NavMain({
       </SidebarMenu>
     </SidebarGroup>
   )
-} 
+}

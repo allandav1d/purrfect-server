@@ -6,33 +6,32 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatBytes(bytes: number | undefined) {
-  if (!bytes) return "0 B";
-  const units = ['B', 'KB', 'MB', 'GB', 'TB'];
-  let size = bytes;
-  let unitIndex = 0;
+  if (!bytes) return "0 B"
+  const units = ["B", "KB", "MB", "GB", "TB"]
+  let size = bytes
+  let unitIndex = 0
 
   while (size >= 1024 && unitIndex < units.length - 1) {
-    size /= 1024;
-    unitIndex++;
+    size /= 1024
+    unitIndex++
   }
 
-  return `${size.toFixed(1)} ${units[unitIndex]}`;
+  return `${size.toFixed(1)} ${units[unitIndex]}`
 }
 
 export function formatSpeed(bytesPerSecond: number | undefined) {
-  if (!bytesPerSecond) return "0 B/s";
-  const units = ['B/s', 'KB/s', 'MB/s', 'GB/s'];
-  let speed = bytesPerSecond;
-  let unitIndex = 0;
+  if (!bytesPerSecond) return "0 B/s"
+  const units = ["B/s", "KB/s", "MB/s", "GB/s"]
+  let speed = bytesPerSecond
+  let unitIndex = 0
 
   while (speed >= 1024 && unitIndex < units.length - 1) {
-    speed /= 1024;
-    unitIndex++;
+    speed /= 1024
+    unitIndex++
   }
 
-  return `${speed.toFixed(1)} ${units[unitIndex]}`;
+  return `${speed.toFixed(1)} ${units[unitIndex]}`
 }
-
 
 export const mapperPackageColor = {
   kernel: { bg: "#b3994d", font: "#000000" },
@@ -73,4 +72,4 @@ export const mapperPackageColor = {
   virtualbox: { bg: "#b34d7a", font: "#ffffff" },
   yarn: { bg: "#b34d4d", font: "#ffffff" },
   zsh: { bg: "#b34d99", font: "#ffffff" },
-};
+}

@@ -1,47 +1,48 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { api } from "@/trpc/react";
+import { useState } from "react"
+import { api } from "@/trpc/react"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { Eye, EyeOff, Github } from "lucide-react";
+} from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { toast } from "sonner"
+import { Switch } from "@/components/ui/switch"
+import { Label } from "@/components/ui/label"
+import { Eye, EyeOff, Github } from "lucide-react"
 
 export function OAuthTab() {
-  const utils = api.useUtils();
-  const { data: settings } = api.settings.getAll.useQuery();
-  const [showSecrets, setShowSecrets] = useState(false);
+  const utils = api.useUtils()
+  const { data: settings } = api.settings.getAll.useQuery()
+  const [showSecrets, setShowSecrets] = useState(false)
 
   const updateSetting = api.settings.upsert.useMutation({
     onSuccess: () => {
-      void utils.settings.getAll.invalidate();
-      toast.success("Configuração atualizada com sucesso");
+      void utils.settings.getAll.invalidate()
+      toast.success("Configuração atualizada com sucesso")
     },
-  });
+  })
 
   return (
     <div className="space-y-4">
       <Card>
         <CardHeader>
           <CardTitle>GitHub OAuth</CardTitle>
-          <CardDescription>
-            Configure a autenticação via GitHub
-          </CardDescription>
+          <CardDescription>Configure a autenticação via GitHub</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center space-x-4">
             <Switch
               id="oauth_github_enabled"
-              checked={settings?.find((s) => s.key === "oauth_github_enabled")?.value === "true"}
+              checked={
+                settings?.find((s) => s.key === "oauth_github_enabled")
+                  ?.value === "true"
+              }
               onCheckedChange={(checked) =>
                 updateSetting.mutate({
                   key: "oauth_github_enabled",
@@ -50,7 +51,9 @@ export function OAuthTab() {
                 })
               }
             />
-            <Label htmlFor="oauth_github_enabled">Ativar autenticação via GitHub</Label>
+            <Label htmlFor="oauth_github_enabled">
+              Ativar autenticação via GitHub
+            </Label>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
@@ -58,7 +61,10 @@ export function OAuthTab() {
               <Label htmlFor="github_client_id">Client ID</Label>
               <Input
                 id="github_client_id"
-                value={settings?.find((s) => s.key === "github_client_id")?.value || ""}
+                value={
+                  settings?.find((s) => s.key === "github_client_id")?.value ||
+                  ""
+                }
                 onChange={(e) =>
                   updateSetting.mutate({
                     key: "github_client_id",
@@ -74,7 +80,10 @@ export function OAuthTab() {
                 <Input
                   id="github_client_secret"
                   type={showSecrets ? "text" : "password"}
-                  value={settings?.find((s) => s.key === "github_client_secret")?.value || ""}
+                  value={
+                    settings?.find((s) => s.key === "github_client_secret")
+                      ?.value || ""
+                  }
                   onChange={(e) =>
                     updateSetting.mutate({
                       key: "github_client_secret",
@@ -103,15 +112,16 @@ export function OAuthTab() {
       <Card>
         <CardHeader>
           <CardTitle>Google OAuth</CardTitle>
-          <CardDescription>
-            Configure a autenticação via Google
-          </CardDescription>
+          <CardDescription>Configure a autenticação via Google</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center space-x-4">
             <Switch
               id="oauth_google_enabled"
-              checked={settings?.find((s) => s.key === "oauth_google_enabled")?.value === "true"}
+              checked={
+                settings?.find((s) => s.key === "oauth_google_enabled")
+                  ?.value === "true"
+              }
               onCheckedChange={(checked) =>
                 updateSetting.mutate({
                   key: "oauth_google_enabled",
@@ -120,7 +130,9 @@ export function OAuthTab() {
                 })
               }
             />
-            <Label htmlFor="oauth_google_enabled">Ativar autenticação via Google</Label>
+            <Label htmlFor="oauth_google_enabled">
+              Ativar autenticação via Google
+            </Label>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
@@ -128,7 +140,10 @@ export function OAuthTab() {
               <Label htmlFor="google_client_id">Client ID</Label>
               <Input
                 id="google_client_id"
-                value={settings?.find((s) => s.key === "google_client_id")?.value || ""}
+                value={
+                  settings?.find((s) => s.key === "google_client_id")?.value ||
+                  ""
+                }
                 onChange={(e) =>
                   updateSetting.mutate({
                     key: "google_client_id",
@@ -144,7 +159,10 @@ export function OAuthTab() {
                 <Input
                   id="google_client_secret"
                   type={showSecrets ? "text" : "password"}
-                  value={settings?.find((s) => s.key === "google_client_secret")?.value || ""}
+                  value={
+                    settings?.find((s) => s.key === "google_client_secret")
+                      ?.value || ""
+                  }
                   onChange={(e) =>
                     updateSetting.mutate({
                       key: "google_client_secret",
@@ -170,5 +188,5 @@ export function OAuthTab() {
         </CardContent>
       </Card>
     </div>
-  );
-} 
+  )
+}

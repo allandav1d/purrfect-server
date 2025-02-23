@@ -1,40 +1,40 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { api } from "@/trpc/react";
+import { useState } from "react"
+import { api } from "@/trpc/react"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { Mail, Send } from "lucide-react";
+} from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { toast } from "sonner"
+import { Switch } from "@/components/ui/switch"
+import { Label } from "@/components/ui/label"
+import { Mail, Send } from "lucide-react"
 
 export function EmailTab() {
-  const utils = api.useUtils();
-  const { data: settings } = api.settings.getAll.useQuery();
+  const utils = api.useUtils()
+  const { data: settings } = api.settings.getAll.useQuery()
 
   const updateSetting = api.settings.upsert.useMutation({
     onSuccess: () => {
-      void utils.settings.getAll.invalidate();
-      toast.success("Configuração atualizada com sucesso");
+      void utils.settings.getAll.invalidate()
+      toast.success("Configuração atualizada com sucesso")
     },
-  });
+  })
 
-  const [testEmail, setTestEmail] = useState("");
+  const [testEmail, setTestEmail] = useState("")
 
-  const smtpSettings = settings?.filter((s) => s.key.startsWith("smtp_")) || [];
+  const smtpSettings = settings?.filter((s) => s.key.startsWith("smtp_")) || []
 
   const handleTestEmail = async () => {
-    toast.info("Enviando email de teste...");
+    toast.info("Enviando email de teste...")
     // Implementar envio de email de teste
-  };
+  }
 
   return (
     <div className="space-y-4">
@@ -52,7 +52,9 @@ export function EmailTab() {
               <Input
                 id="smtp_host"
                 placeholder="smtp.exemplo.com"
-                value={smtpSettings.find((s) => s.key === "smtp_host")?.value || ""}
+                value={
+                  smtpSettings.find((s) => s.key === "smtp_host")?.value || ""
+                }
                 onChange={(e) =>
                   updateSetting.mutate({
                     key: "smtp_host",
@@ -68,7 +70,9 @@ export function EmailTab() {
                 id="smtp_port"
                 type="number"
                 placeholder="587"
-                value={smtpSettings.find((s) => s.key === "smtp_port")?.value || ""}
+                value={
+                  smtpSettings.find((s) => s.key === "smtp_port")?.value || ""
+                }
                 onChange={(e) =>
                   updateSetting.mutate({
                     key: "smtp_port",
@@ -83,7 +87,9 @@ export function EmailTab() {
               <Input
                 id="smtp_user"
                 placeholder="user@exemplo.com"
-                value={smtpSettings.find((s) => s.key === "smtp_user")?.value || ""}
+                value={
+                  smtpSettings.find((s) => s.key === "smtp_user")?.value || ""
+                }
                 onChange={(e) =>
                   updateSetting.mutate({
                     key: "smtp_user",
@@ -99,7 +105,10 @@ export function EmailTab() {
                 id="smtp_password"
                 type="password"
                 placeholder="••••••••"
-                value={smtpSettings.find((s) => s.key === "smtp_password")?.value || ""}
+                value={
+                  smtpSettings.find((s) => s.key === "smtp_password")?.value ||
+                  ""
+                }
                 onChange={(e) =>
                   updateSetting.mutate({
                     key: "smtp_password",
@@ -136,7 +145,10 @@ export function EmailTab() {
           <div className="flex items-center space-x-4">
             <Switch
               id="notify_domain_status"
-              checked={settings?.find((s) => s.key === "notify_domain_status")?.value === "true"}
+              checked={
+                settings?.find((s) => s.key === "notify_domain_status")
+                  ?.value === "true"
+              }
               onCheckedChange={(checked) =>
                 updateSetting.mutate({
                   key: "notify_domain_status",
@@ -145,13 +157,18 @@ export function EmailTab() {
                 })
               }
             />
-            <Label htmlFor="notify_domain_status">Notificar mudanças no status dos domínios</Label>
+            <Label htmlFor="notify_domain_status">
+              Notificar mudanças no status dos domínios
+            </Label>
           </div>
 
           <div className="flex items-center space-x-4">
             <Switch
               id="notify_backup_status"
-              checked={settings?.find((s) => s.key === "notify_backup_status")?.value === "true"}
+              checked={
+                settings?.find((s) => s.key === "notify_backup_status")
+                  ?.value === "true"
+              }
               onCheckedChange={(checked) =>
                 updateSetting.mutate({
                   key: "notify_backup_status",
@@ -160,10 +177,12 @@ export function EmailTab() {
                 })
               }
             />
-            <Label htmlFor="notify_backup_status">Notificar status dos backups</Label>
+            <Label htmlFor="notify_backup_status">
+              Notificar status dos backups
+            </Label>
           </div>
         </CardContent>
       </Card>
     </div>
-  );
-} 
+  )
+}

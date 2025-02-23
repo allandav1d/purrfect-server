@@ -80,7 +80,7 @@ export function LoginForm() {
             />
           </div>
           {error && (
-            <div className="text-sm text-destructive text-center">{error}</div>
+            <div className="text-center text-sm text-destructive">{error}</div>
           )}
         </CardContent>
         <CardFooter>
@@ -91,4 +91,4 @@ export function LoginForm() {
       </form>
     </Card>
   )
-} 
+}

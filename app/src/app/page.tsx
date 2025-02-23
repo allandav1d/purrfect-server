@@ -15,13 +15,13 @@ export default async function HomePage() {
   const isConfigured = await api.system.isConfigured()
 
   return (
-    <div className="container relative min-h-screen flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
-      <div className="absolute top-4 right-4 z-50">
+    <div className="container relative grid min-h-screen flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">
+      <div className="absolute right-4 top-4 z-50">
         <ThemeToggle />
       </div>
-      <div className="relative hidden h-full items-center bg-black/20 justify-center flex-col p-10 text-white lg:flex dark:border-r dark:border-border/10">
-        <div className="absolute inset-0 bg-sidebar-bg/110" />
-        <div className="relative z-20 flex items-center justify-center text-lg font-medium mt-auto">
+      <div className="relative hidden h-full flex-col items-center justify-center bg-black/20 p-10 text-white dark:border-r dark:border-border/10 lg:flex">
+        <div className="bg-sidebar-bg/110 absolute inset-0" />
+        <div className="relative z-20 mt-auto flex items-center justify-center text-lg font-medium">
           <Image
             src="/logo/logo-light.svg"
             alt="Purrfect Server"
@@ -40,7 +40,8 @@ export default async function HomePage() {
         <div className="relative z-20 mt-auto">
           <blockquote className="space-y-2">
             <p className="text-lg">
-              "O Purrfect Server é a solução perfeita para gerenciar seus servidores com elegância e simplicidade."
+              "O Purrfect Server é a solução perfeita para gerenciar seus
+              servidores com elegância e simplicidade."
             </p>
             <footer className="text-sm text-white/80">ByteLabs</footer>
           </blockquote>

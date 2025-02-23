@@ -50,7 +50,7 @@ const data = {
           title: "Visão Geral",
           url: "/dashboard",
         },
-/*         {
+        /*         {
           title: "Memória",
           url: "#",
         },
@@ -74,7 +74,7 @@ const data = {
           title: "Servidor",
           url: "/dashboard/settings/server",
         },
-/*         {
+        /*         {
           title: "Usuários",
           url: "#",
         },
@@ -88,7 +88,7 @@ const data = {
         }, */
       ],
     },
-/*     {
+    /*     {
       title: "Logs",
       url: "#",
       icon: BookOpen,
@@ -111,7 +111,7 @@ const data = {
         },
       ],
     }, */
-/*     {
+    /*     {
       title: "Servidores",
       url: "#",
       icon: Settings2,
@@ -167,8 +167,6 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-
-  
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
@@ -177,11 +175,25 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton size="lg" asChild>
               <a href="#">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-background">
-                  <Image src="/logo/logo-dark.svg" alt="Purrfect Server" width={32} height={32} className="hidden dark:block" />
-                  <Image src="/logo/logo-light.svg" alt="Purrfect Server" width={32} height={32} className="block dark:hidden" />
+                  <Image
+                    src="/logo/logo-dark.svg"
+                    alt="Purrfect Server"
+                    width={32}
+                    height={32}
+                    className="hidden dark:block"
+                  />
+                  <Image
+                    src="/logo/logo-light.svg"
+                    alt="Purrfect Server"
+                    width={32}
+                    height={32}
+                    className="block dark:hidden"
+                  />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">Purrfect Server</span>
+                  <span className="truncate font-semibold">
+                    Purrfect Server
+                  </span>
                   <span className="truncate text-xs">Enterprise</span>
                 </div>
               </a>
@@ -195,8 +207,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-          <NavUser />
+        <NavUser />
       </SidebarFooter>
     </Sidebar>
   )
-} 
+}

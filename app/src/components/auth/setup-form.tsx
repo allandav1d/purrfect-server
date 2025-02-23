@@ -86,13 +86,14 @@ export function SetupForm() {
         <CardHeader>
           <CardTitle>Configuração Inicial</CardTitle>
           <CardDescription>
-            Configure seu primeiro usuário administrador para começar a usar o sistema
+            Configure seu primeiro usuário administrador para começar a usar o
+            sistema
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex justify-center mb-6">
+          <div className="mb-6 flex justify-center">
             <label htmlFor="image" className="cursor-pointer">
-              <Avatar className="w-24 h-24">
+              <Avatar className="h-24 w-24">
                 <AvatarImage src={imagePreview ?? ""} />
                 <AvatarFallback className="bg-primary/10">
                   {imagePreview ? "IMG" : "ADD"}
@@ -153,7 +154,7 @@ export function SetupForm() {
             />
           </div>
           {error && (
-            <div className="text-sm text-destructive text-center">{error}</div>
+            <div className="text-center text-sm text-destructive">{error}</div>
           )}
         </CardContent>
         <CardFooter>
@@ -164,4 +165,4 @@ export function SetupForm() {
       </form>
     </Card>
   )
-} 
+}

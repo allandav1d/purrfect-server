@@ -1,6 +1,6 @@
-import { type Config } from "drizzle-kit";
+import { type Config } from "drizzle-kit"
 
-import { env } from "@/env.js";
+import { env } from "@/env.js"
 
 export default {
   schema: "./src/server/db/schema.ts",
@@ -9,4 +9,4 @@ export default {
     url: env.DATABASE_URL,
   },
   tablesFilter: ["purrfect-server_*"],
-} satisfies Config;
+} satisfies Config

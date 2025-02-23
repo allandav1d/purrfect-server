@@ -1,23 +1,23 @@
-"use client";
+"use client"
 
-import * as React from "react";
-import { Clipboard } from "lucide-react";
+import * as React from "react"
+import { Clipboard } from "lucide-react"
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { toast } from "sonner";
+} from "@/components/ui/tooltip"
+import { toast } from "sonner"
 
 interface CopyableProps {
-  text: string;
-  label?: string;
-  className?: string;
-  showToast?: boolean;
-  tooltipMessage?: string;
-  toastMessage?: string;
-  errorMessage?: string;
+  text: string
+  label?: string
+  className?: string
+  showToast?: boolean
+  tooltipMessage?: string
+  toastMessage?: string
+  errorMessage?: string
 }
 
 export function Copyable({
@@ -29,54 +29,54 @@ export function Copyable({
   toastMessage = "Texto copiado!",
   errorMessage = "Erro ao copiar o texto",
 }: CopyableProps) {
-  const [showTooltip, setShowTooltip] = React.useState(false);
+  const [showTooltip, setShowTooltip] = React.useState(false)
 
   const copyToClipboard = async () => {
     try {
       if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(text);
+        await navigator.clipboard.writeText(text)
       } else {
         // Fallback para browsers mais antigos
-        const textArea = document.createElement("textarea");
-        textArea.value = text;
-        textArea.style.position = "fixed";
-        textArea.style.left = "-999999px";
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
+        const textArea = document.createElement("textarea")
+        textArea.value = text
+        textArea.style.position = "fixed"
+        textArea.style.left = "-999999px"
+        document.body.appendChild(textArea)
+        textArea.focus()
+        textArea.select()
         try {
-          document.execCommand("copy");
+          document.execCommand("copy")
         } finally {
-          textArea.remove();
+          textArea.remove()
         }
       }
-      
+
       // Mostra o tooltip
-      setShowTooltip(true);
-      setTimeout(() => setShowTooltip(false), 2000);
+      setShowTooltip(true)
+      setTimeout(() => setShowTooltip(false), 2000)
 
       // Mostra o toast se necessário
       if (showToast) {
-        toast.success(toastMessage);
+        toast.success(toastMessage)
       }
     } catch (error) {
-      console.error("Erro ao copiar texto:", error);
+      console.error("Erro ao copiar texto:", error)
       if (showToast) {
-        toast.error(errorMessage);
+        toast.error(errorMessage)
       }
     }
-  };
+  }
 
   return (
     <TooltipProvider>
       <Tooltip open={showTooltip}>
         <TooltipTrigger asChild>
           <span
-            className={`inline-flex items-center gap-1 cursor-pointer hover:text-primary ${className}`}
+            className={`inline-flex cursor-pointer items-center gap-1 hover:text-primary ${className}`}
             onClick={copyToClipboard}
           >
             {label && <span>{label}: </span>}
-            <code className="bg-muted px-1 py-0.5 rounded">{text}</code>
+            <code className="rounded bg-muted px-1 py-0.5">{text}</code>
             <Clipboard className="h-4 w-4" />
           </span>
         </TooltipTrigger>
@@ -85,5 +85,5 @@ export function Copyable({
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
-  );
-} 
+  )
+}

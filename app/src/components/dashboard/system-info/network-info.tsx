@@ -1,23 +1,32 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { formatSpeed } from '@/lib/utils';
-import { api } from '@/trpc/react';
-import { Copyable } from '@/components/ui/copyable';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { formatSpeed } from "@/lib/utils"
+import { api } from "@/trpc/react"
+import { Copyable } from "@/components/ui/copyable"
 
 export function NetworkInfo() {
-  const { data, status } = api.system.getSystemInfo.subscription.useSubscription({
-    interval: 1000, // every 1 second
-    data: {
-      networkInterfaces: '*',
-      networkGatewayDefault: '',
-      networkInterfaceDefault: '*',
-      inetChecksite: 'google.com',
-      networkStats: '*'
-    }
-  });
+  const { data, status } =
+    api.system.getSystemInfo.subscription.useSubscription({
+      interval: 1000, // every 1 second
+      data: {
+        networkInterfaces: "*",
+        networkGatewayDefault: "",
+        networkInterfaceDefault: "*",
+        inetChecksite: "google.com",
+        networkStats: "*",
+      },
+    })
 
-  const { networkInterfaces, networkGatewayDefault, networkInterfaceDefault, inetChecksite, networkStats } = data || {};
+  const {
+    networkInterfaces,
+    networkGatewayDefault,
+    networkInterfaceDefault,
+    inetChecksite,
+    networkStats,
+  } = data || {}
 
-  const defaultInterface = networkInterfaces?.find((iface: any) => iface.iface === networkInterfaceDefault);
+  const defaultInterface = networkInterfaces?.find(
+    (iface: any) => iface.iface === networkInterfaceDefault,
+  )
 
   if (!networkStats) {
     return (
@@ -97,5 +106,5 @@ export function NetworkInfo() {
         )}
       </CardContent>
     </Card>
-  );
-} 
+  )
+}

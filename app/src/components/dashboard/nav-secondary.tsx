@@ -39,4 +39,4 @@ export function NavSecondary({
       </SidebarGroupContent>
     </SidebarGroup>
   )
-} 
+}

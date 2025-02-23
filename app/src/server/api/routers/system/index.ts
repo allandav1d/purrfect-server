@@ -10,4 +10,4 @@ export const systemRouter = createTRPCRouter({
   // System public procedures
   isConfigured: isConfiguredRouter,
   initialize: initializeRouter,
-}) 
+})

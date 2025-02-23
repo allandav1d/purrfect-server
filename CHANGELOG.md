@@ -5,6 +5,14 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 ## [Não publicado]
 
+### Alterado
+- **domains**: Simplify domain table layout and remove unused columns
+
+- Remove DNS Reverso column from domains table
+- Adjust table content padding
+- Commented out unused DNS status column
+- Update README to mark simple domain management as completed
+
 ### Adicionado
 - **domains**: Enhance domain management with validation and confirmation
 

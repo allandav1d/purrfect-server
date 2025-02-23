@@ -1,7 +1,7 @@
 export const defaultSettings = [
   {
     key: "server_ipv4",
-    value:  null,
+    value: null,
     description: "Endereço IPv4 do servidor",
     type: "string" as const,
     isSystem: true,
@@ -41,4 +41,4 @@ export const defaultSettings = [
     type: "string" as const,
     isSystem: true,
   },
-] as const; 
+] as const

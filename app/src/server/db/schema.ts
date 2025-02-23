@@ -1,4 +1,4 @@
-import { relations, sql } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm"
 import {
   index,
   integer,
@@ -8,8 +8,8 @@ import {
   timestamp,
   varchar,
   boolean,
-} from "drizzle-orm/pg-core";
-import { type AdapterAccount } from "next-auth/adapters";
+} from "drizzle-orm/pg-core"
+import { type AdapterAccount } from "next-auth/adapters"
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -17,7 +17,7 @@ import { type AdapterAccount } from "next-auth/adapters";
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const createTable = pgTableCreator((name) => `purrfect-server_${name}`);
+export const createTable = pgTableCreator((name) => `purrfect-server_${name}`)
 
 export const users = createTable("user", {
   id: varchar("id", { length: 255 })
@@ -33,11 +33,11 @@ export const users = createTable("user", {
   image: varchar("image", { length: 255 }),
   password: varchar("password", { length: 255 }),
   role: varchar("role", { length: 20 }).default("USER"),
-});
+})
 
 export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
-}));
+}))
 
 export const accounts = createTable(
   "account",
@@ -65,12 +65,12 @@ export const accounts = createTable(
       columns: [account.provider, account.providerAccountId],
     }),
     userIdIdx: index("account_user_id_idx").on(account.userId),
-  })
-);
+  }),
+)
 
 export const accountsRelations = relations(accounts, ({ one }) => ({
   user: one(users, { fields: [accounts.userId], references: [users.id] }),
-}));
+}))
 
 export const sessions = createTable(
   "session",
@@ -88,12 +88,12 @@ export const sessions = createTable(
   },
   (session) => ({
     userIdIdx: index("session_user_id_idx").on(session.userId),
-  })
-);
+  }),
+)
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
   user: one(users, { fields: [sessions.userId], references: [users.id] }),
-}));
+}))
 
 export const verificationTokens = createTable(
   "verification_token",
@@ -107,8 +107,8 @@ export const verificationTokens = createTable(
   },
   (vt) => ({
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
-  })
-);
+  }),
+)
 
 export const domains = createTable("domain", {
   id: varchar("id", { length: 255 })
@@ -131,7 +131,7 @@ export const domains = createTable("domain", {
   userId: varchar("user_id", { length: 255 })
     .notNull()
     .references(() => users.id),
-});
+})
 
 export const serverSettings = createTable("server_settings", {
   id: varchar("id", { length: 255 })
@@ -151,4 +151,4 @@ export const serverSettings = createTable("server_settings", {
     mode: "date",
     withTimezone: true,
   }).default(sql`CURRENT_TIMESTAMP`),
-});
+})

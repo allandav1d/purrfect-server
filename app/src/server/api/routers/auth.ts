@@ -1,6 +1,6 @@
-import { createTRPCRouter, protectedProcedure } from "../trpc";
-import { users } from "@/server/db/schema";
-import { eq } from "drizzle-orm";
+import { createTRPCRouter, protectedProcedure } from "../trpc"
+import { users } from "@/server/db/schema"
+import { eq } from "drizzle-orm"
 
 type Me = {
   id: string
@@ -21,7 +21,7 @@ export const authRouter = createTRPCRouter({
       },
     })
 
-    console.log("ctx.session.user ",user?.id , ctx.session.user, user)
+    console.log("ctx.session.user ", user?.id, ctx.session.user, user)
     return user as Me | null
   }),
 })

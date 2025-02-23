@@ -1,28 +1,30 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
-import { api } from '@/trpc/react';
-
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Progress } from "@/components/ui/progress"
+import { api } from "@/trpc/react"
 
 export function CpuInfo() {
-    const { data, status } = api.system.getSystemInfo.subscription.useSubscription({
-        interval: 10000, // every 10 seconds
-        data: {
-            osInfo: 'platform, distro, release, uptime',
-            chassis: 'manufacturer, model, serial, type',
-            time: 'uptime',
-            versions: '*'
-        }
-    });
+  const { data, status } =
+    api.system.getSystemInfo.subscription.useSubscription({
+      interval: 10000, // every 10 seconds
+      data: {
+        osInfo: "platform, distro, release, uptime",
+        chassis: "manufacturer, model, serial, type",
+        time: "uptime",
+        versions: "*",
+      },
+    })
 
-    if (status === 'connecting') {
-        return <Card>
-            <CardHeader>
-                <CardTitle>CPU</CardTitle>
-            </CardHeader>
-        </Card>
-    }
+  if (status === "connecting") {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>CPU</CardTitle>
+        </CardHeader>
+      </Card>
+    )
+  }
 
-    return null;
+  return null
   return (
     <Card>
       <CardHeader>
@@ -46,7 +48,7 @@ export function CpuInfo() {
           <div className="space-y-2">
             <div className="flex items-center justify-between text-sm">
               <span>Temperatura</span>
-              <span>{data.temperature[0]?.toFixed(1) || 'N/A'}°C</span>
+              <span>{data.temperature[0]?.toFixed(1) || "N/A"}°C</span>
             </div>
             <Progress
               value={(data.temperature[0] ?? 0 / 100) * 100}
@@ -56,5 +58,5 @@ export function CpuInfo() {
         )}
       </CardContent>
     </Card>
-  );
+  )
 }
