@@ -1,0 +1,135 @@
+#!/bin/bash
+
+# Cores para output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+echo -e "${YELLOW}Iniciando validação do commit...${NC}"
+
+# Verifica se há alterações para commitar
+if git diff --cached --quiet; then
+    echo -e "${RED}Erro: Não há alterações para commitar${NC}"
+    exit 1
+fi
+
+# Obtém a mensagem do último commit staged
+COMMIT_MSG=$(git log -1 --pretty=%B)
+
+# Padrão de commit esperado
+PATTERN="^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|temp|wip|remove|change)(\([a-z-]+\))?: .+$"
+
+# Verifica se a mensagem segue o padrão
+if ! echo "$COMMIT_MSG" | grep -qE "$PATTERN"; then
+    echo -e "${RED}Erro: Mensagem de commit inválida${NC}"
+    echo -e "${YELLOW}A mensagem deve seguir o padrão: <tipo>(escopo opcional): <descrição>${NC}"
+    echo -e "\nTipos permitidos:"
+    echo -e "${GREEN}feat${NC}     : Nova funcionalidade (minor)"
+    echo -e "${GREEN}fix${NC}      : Correção de bug (patch)"
+    echo -e "${GREEN}docs${NC}     : Documentação"
+    echo -e "${GREEN}style${NC}    : Formatação"
+    echo -e "${GREEN}refactor${NC} : Refatoração"
+    echo -e "${GREEN}test${NC}     : Testes"
+    echo -e "${GREEN}chore${NC}    : Manutenção"
+    echo -e "${GREEN}perf${NC}     : Performance"
+    echo -e "${GREEN}ci${NC}       : CI"
+    echo -e "${GREEN}build${NC}    : Build"
+    echo -e "${GREEN}temp${NC}     : Temporário"
+    echo -e "${GREEN}wip${NC}      : WIP"
+    echo -e "${GREEN}remove${NC}   : Remoção"
+    echo -e "${GREEN}change${NC}   : Alterações"
+    exit 1
+fi
+
+# Extrai o tipo do commit
+COMMIT_TYPE=$(echo "$COMMIT_MSG" | sed -n 's/^\([a-zA-Z]\+\).*/\1/p')
+
+# Extrai a mensagem sem o tipo e escopo
+COMMIT_CONTENT=$(echo "$COMMIT_MSG" | sed -E 's/^[a-zA-Z]+(\([a-z-]+\))?: //')
+
+# Atualiza a versão baseado no tipo do commit
+echo -e "${YELLOW}Atualizando versão...${NC}"
+CURRENT_VERSION=$(node -p "require('./package.json').version")
+echo "Versão atual: $CURRENT_VERSION"
+
+case "$COMMIT_TYPE" in
+    feat|feature)
+        NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. '{print $1"."($2+1)".0"}')
+        SECTION="Adicionado"
+        ;;
+    fix|bugfix)
+        NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. '{print $1"."$2"."($3+1)}')
+        SECTION="Corrigido"
+        ;;
+    *)
+        NEW_VERSION=$CURRENT_VERSION
+        case "$COMMIT_TYPE" in
+            change|refactor) SECTION="Alterado" ;;
+            remove) SECTION="Removido" ;;
+            docs) SECTION="Documentação" ;;
+            perf) SECTION="Performance" ;;
+            *) SECTION="" ;;
+        esac
+        ;;
+esac
+
+if [ "$NEW_VERSION" != "$CURRENT_VERSION" ]; then
+    echo "Nova versão: $NEW_VERSION"
+    # Atualiza package.json
+    sed -i "s/\"version\": \"$CURRENT_VERSION\"/\"version\": \"$NEW_VERSION\"/" package.json
+    echo -e "${GREEN}✓ Versão atualizada${NC}"
+fi
+
+# Atualiza o changelog se necessário
+if [ -n "$SECTION" ]; then
+    echo -e "${YELLOW}Atualizando changelog...${NC}"
+    
+    # Cria um arquivo temporário
+    TMP_FILE=$(mktemp)
+    
+    # Extrai o escopo se existir
+    SCOPE=$(echo "$COMMIT_MSG" | sed -n 's/^[a-zA-Z]\+(\([a-z-]\+\)):.*/\1/p')
+    
+    # Formata a entrada do changelog
+    if [ -n "$SCOPE" ]; then
+        CHANGELOG_ENTRY="- **$SCOPE**: $COMMIT_CONTENT"
+    else
+        CHANGELOG_ENTRY="- $COMMIT_CONTENT"
+    fi
+    
+    # Lê o changelog atual até [Não publicado]
+    sed -n '1,/^## \[Não publicado\]/p' CHANGELOG.md > "$TMP_FILE"
+    
+    # Adiciona a nova seção se não existir
+    if ! grep -q "^### $SECTION" "$TMP_FILE"; then
+        echo -e "\n### $SECTION" >> "$TMP_FILE"
+    fi
+    
+    # Adiciona a nova entrada
+    echo "$CHANGELOG_ENTRY" >> "$TMP_FILE"
+    
+    # Adiciona o resto do changelog
+    sed -n '/^## \[Não publicado\]/,$p' CHANGELOG.md | tail -n +2 >> "$TMP_FILE"
+    
+    # Substitui o changelog antigo
+    mv "$TMP_FILE" CHANGELOG.md
+    echo -e "${GREEN}✓ Changelog atualizado${NC}"
+    
+    # Se a versão mudou, cria uma nova seção no changelog
+    if [ "$NEW_VERSION" != "$CURRENT_VERSION" ]; then
+        echo -e "${YELLOW}Criando nova seção de versão no changelog...${NC}"
+        DATE=$(date +%Y-%m-%d)
+        sed -i "s/## \[Não publicado\]/## \[Não publicado\]\n\n## \[$NEW_VERSION\] - $DATE/" CHANGELOG.md
+        echo -e "${GREEN}✓ Nova seção de versão criada${NC}"
+    fi
+fi
+
+# Adiciona as alterações ao staging
+if [ "$NEW_VERSION" != "$CURRENT_VERSION" ] || [ -n "$SECTION" ]; then
+    git add package.json CHANGELOG.md
+    echo -e "${GREEN}✓ Alterações adicionadas ao staging${NC}"
+fi
+
+echo -e "${GREEN}Commit validado com sucesso!${NC}"
+exit 0 

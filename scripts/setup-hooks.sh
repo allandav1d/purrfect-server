@@ -1,14 +1,28 @@
 #!/bin/bash
 
-# Cria o diretório de scripts se não existir
-mkdir -p scripts
+# Cores para output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
 
-# Copia os hooks para o diretório .git/hooks
-cp .github/hooks/commit-msg .git/hooks/
-cp .github/hooks/pre-push .git/hooks/
+echo -e "${YELLOW}Configurando Git hooks...${NC}"
 
-# Torna os hooks executáveis
-chmod +x .git/hooks/commit-msg
-chmod +x .git/hooks/pre-push
+# Cria o diretório de hooks se não existir
+mkdir -p .git/hooks
 
-echo "Git hooks configurados com sucesso!" 
+# Lista de hooks para copiar
+HOOKS=(
+    "pre-commit"
+    "pre-push"
+)
+
+# Copia cada hook e torna executável
+for hook in "${HOOKS[@]}"; do
+    echo -e "${YELLOW}Instalando $hook...${NC}"
+    cp .github/hooks/$hook .git/hooks/
+    chmod +x .git/hooks/$hook
+    echo -e "${GREEN}✓ $hook instalado${NC}"
+done
+
+echo -e "${GREEN}Git hooks configurados com sucesso!${NC}" 
