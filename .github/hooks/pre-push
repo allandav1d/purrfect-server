@@ -73,8 +73,11 @@ DATE=$(date +%Y-%m-%d)
 NEXT_VERSION_LINE=$(grep -n "## \[[0-9]" CHANGELOG.md | head -n 1 | cut -d: -f1)
 UNPUBLISHED_CONTENT=$(sed -n "/## \[Não publicado\]/,${NEXT_VERSION_LINE}p" CHANGELOG.md | grep -v "## \[" | grep -v "^$" || true)
 
-if [ -n "$UNPUBLISHED_CONTENT" ]; then
-    echo -e "${YELLOW}Movendo alterações não publicadas para a versão $PACKAGE_VERSION...${NC}"
+# Verifica se a versão no package.json corresponde à última versão no changelog
+CHANGELOG_VERSION=$(grep -oP "## \[\K[0-9]+\.[0-9]+\.[0-9]+" CHANGELOG.md | head -n 1)
+
+if [ "$PACKAGE_VERSION" != "$CHANGELOG_VERSION" ] || [ -n "$UNPUBLISHED_CONTENT" ]; then
+    echo -e "${YELLOW}Sincronizando versões...${NC}"
     
     # Cria um arquivo temporário
     TMP_FILE=$(mktemp)
@@ -85,10 +88,12 @@ if [ -n "$UNPUBLISHED_CONTENT" ]; then
     # Adiciona uma linha em branco após [Não publicado]
     echo "" >> "$TMP_FILE"
     
-    # Adiciona a nova seção de versão
-    echo "## [$PACKAGE_VERSION] - $DATE" >> "$TMP_FILE"
-    echo "$UNPUBLISHED_CONTENT" >> "$TMP_FILE"
-    echo "" >> "$TMP_FILE"
+    # Se houver conteúdo não publicado, adiciona nova seção
+    if [ -n "$UNPUBLISHED_CONTENT" ]; then
+        echo "## [$PACKAGE_VERSION] - $DATE" >> "$TMP_FILE"
+        echo "$UNPUBLISHED_CONTENT" >> "$TMP_FILE"
+        echo "" >> "$TMP_FILE"
+    fi
     
     # Adiciona o resto do changelog
     sed -n '/## \[[0-9]/,$p' CHANGELOG.md >> "$TMP_FILE"
@@ -101,11 +106,9 @@ if [ -n "$UNPUBLISHED_CONTENT" ]; then
     git commit --amend --no-edit
     
     echo -e "${GREEN}✓ Changelog atualizado com a nova versão${NC}"
-else
-    echo -e "${GREEN}✓ Não há alterações não publicadas${NC}"
 fi
 
-# Verifica se a versão no package.json corresponde à última versão no changelog
+# Verifica novamente se as versões estão sincronizadas
 CHANGELOG_VERSION=$(grep -oP "## \[\K[0-9]+\.[0-9]+\.[0-9]+" CHANGELOG.md | head -n 1)
 
 if [ "$PACKAGE_VERSION" = "$CHANGELOG_VERSION" ]; then
