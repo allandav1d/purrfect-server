@@ -1,11 +1,11 @@
 {
-    "version": "0.0.1",
+    "version": "0.0.11",
     "name": "purrfect-server",
     "description": "Purrfect Server is a versatile management solution designed to work seamlessly across different environments. Whether you're managing local development setups, bare metal servers, or cloud instances, it provides a unified interface for all your server management needs.",
     "scripts": {
-        "version:major": "bun version major -m \"chore: bump version to %s\"",
-        "version:minor": "bun version minor -m \"chore: bump version to %s\"",
-        "version:patch": "bun version patch -m \"chore: bump version to %s\"",
+        "version:major": "npm version major -m \"chore: bump version to %s\"",
+        "version:minor": "npm version minor -m \"chore: bump version to %s\"",
+        "version:patch": "npm version patch -m \"chore: bump version to %s\"",
         "prepare": "./scripts/setup-hooks.sh"
     },
     "repository": {
