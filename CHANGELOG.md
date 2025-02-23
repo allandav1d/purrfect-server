@@ -6,6 +6,22 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 
 ## [Não publicado]
 
+### Alterado
+- **hooks**: Simplify changelog version update logic
+
+- Modify pre-push hook to streamline changelog version synchronization
+- Improve version insertion with default entry when no unpublished content exists
+- Optimize changelog update process with clearer version handling
+- Ensure consistent changelog formatting for version updates
+
+## [0.0.18] - 2025-02-23
+### Alterado
+- **hooks**: Improve changelog version synchronization logic
+- Enhance pre-push hook to check and sync package.json and CHANGELOG.md versions
+- Add more robust version detection and handling
+- Optimize changelog update process with conditional version insertion
+- Improve error handling and output messaging
+
 ## [0.0.15] - 2025-02-23
 ### Adicionado
 - Add Copyable component for IP address copying

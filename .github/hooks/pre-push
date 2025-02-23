@@ -76,7 +76,7 @@ UNPUBLISHED_CONTENT=$(sed -n "/## \[Não publicado\]/,${NEXT_VERSION_LINE}p" CHA
 # Verifica se a versão no package.json corresponde à última versão no changelog
 CHANGELOG_VERSION=$(grep -oP "## \[\K[0-9]+\.[0-9]+\.[0-9]+" CHANGELOG.md | head -n 1)
 
-if [ "$PACKAGE_VERSION" != "$CHANGELOG_VERSION" ] || [ -n "$UNPUBLISHED_CONTENT" ]; then
+if [ "$PACKAGE_VERSION" != "$CHANGELOG_VERSION" ]; then
     echo -e "${YELLOW}Sincronizando versões...${NC}"
     
     # Cria um arquivo temporário
@@ -84,18 +84,22 @@ if [ "$PACKAGE_VERSION" != "$CHANGELOG_VERSION" ] || [ -n "$UNPUBLISHED_CONTENT"
     
     # Mantém o cabeçalho até [Não publicado]
     sed -n '1,/## \[Não publicado\]/p' CHANGELOG.md > "$TMP_FILE"
-    
-    # Adiciona uma linha em branco após [Não publicado]
     echo "" >> "$TMP_FILE"
     
-    # Se houver conteúdo não publicado, adiciona nova seção
-    if [ -n "$UNPUBLISHED_CONTENT" ]; then
-        echo "## [$PACKAGE_VERSION] - $DATE" >> "$TMP_FILE"
-        echo "$UNPUBLISHED_CONTENT" >> "$TMP_FILE"
-        echo "" >> "$TMP_FILE"
-    fi
+    # Adiciona a nova versão
+    echo "## [$PACKAGE_VERSION] - $DATE" >> "$TMP_FILE"
     
-    # Adiciona o resto do changelog
+    # Se houver conteúdo não publicado, adiciona à nova versão
+    if [ -n "$UNPUBLISHED_CONTENT" ]; then
+        echo "$UNPUBLISHED_CONTENT" >> "$TMP_FILE"
+    else
+        # Se não houver conteúdo não publicado, adiciona uma entrada padrão
+        echo "### Alterado" >> "$TMP_FILE"
+        echo "- Atualização de versão para $PACKAGE_VERSION" >> "$TMP_FILE"
+    fi
+    echo "" >> "$TMP_FILE"
+    
+    # Adiciona o resto do changelog (versões anteriores)
     sed -n '/## \[[0-9]/,$p' CHANGELOG.md >> "$TMP_FILE"
     
     # Substitui o changelog antigo
