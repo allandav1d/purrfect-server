@@ -19,10 +19,34 @@ import { ConfigurationTab } from "./tabs/configuration";
 import { EmailTab } from "./tabs/email";
 import { BackupTab } from "./tabs/backup";
 import { OAuthTab } from "./tabs/oauth";
+import { SidebarTrigger } from "@/components/ui/sidebar";
+import { Separator } from "@/components/ui/separator";
+import { BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { BreadcrumbItem } from "@/components/ui/breadcrumb";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { BreadcrumbList } from "@/components/ui/breadcrumb";
 
 export default function ServerSettingsPage() {
   return (
-    <div className="container space-y-4 py-4">
+    <>
+    <header className="flex h-16 shrink-0 items-center gap-2">
+  <div className="flex items-center gap-2 px-4">
+    <SidebarTrigger className="-ml-1" />
+    <Separator orientation="vertical" className="mr-2 h-4" />
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem className="hidden md:block">
+          <BreadcrumbLink href="/dashboard/settings/server">Configurações</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator className="hidden md:block" />
+        <BreadcrumbItem>
+          <BreadcrumbPage>Servidor</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  </div>
+</header>
+    <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
       <div className="flex flex-col gap-4">
         <h1 className="text-3xl font-bold">Configurações do Servidor</h1>
         <p className="text-muted-foreground">
@@ -67,5 +91,6 @@ export default function ServerSettingsPage() {
         </TabsContent>
       </Tabs>
     </div>
+    </>
   );
 } 

@@ -42,22 +42,22 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      //url: "#",
       icon: SquareTerminal,
       isActive: true,
       items: [
         {
           title: "Visão Geral",
-          url: "#",
+          url: "/dashboard",
         },
-        {
+/*         {
           title: "Memória",
           url: "#",
         },
         {
           title: "Processos",
           url: "#",
-        },
+        }, */
       ],
     },
     {
@@ -74,7 +74,7 @@ const data = {
           title: "Servidor",
           url: "/dashboard/settings/server",
         },
-        {
+/*         {
           title: "Usuários",
           url: "#",
         },
@@ -85,10 +85,10 @@ const data = {
         {
           title: "Permissões",
           url: "#",
-        },
+        }, */
       ],
     },
-    {
+/*     {
       title: "Logs",
       url: "#",
       icon: BookOpen,
@@ -110,8 +110,8 @@ const data = {
           url: "#",
         },
       ],
-    },
-    {
+    }, */
+/*     {
       title: "Servidores",
       url: "#",
       icon: Settings2,
@@ -133,7 +133,7 @@ const data = {
           url: "#",
         },
       ],
-    },
+    }, */
   ],
   navSecondary: [
     {

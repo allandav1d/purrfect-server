@@ -6,11 +6,19 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 ## [Não publicado]
 
 ### Adicionado
-- **hooks**: Enhance pre-push synchronization checks
+- **domains**: Enhance domain management with validation and confirmation
 
+- Add domain validation with regex and error handling
+- Implement domain deletion confirmation dialog
+- Improve UI with breadcrumbs and tutorial dialog
+- Add input validation for domain entry
+- Refactor domain management page layout and interactions
+## [0.0.28] - 2025-02-23
 - Add `check_sync()` function to improve remote branch synchronization logic
-- Implement detailed branch status checks with color-coded output
 - Add final synchronization verification before push
+### Adicionado
+- **hooks**: Enhance pre-push synchronization checks
+- Implement detailed branch status checks with color-coded output
 - Improve error handling for branch synchronization scenarios
 ## [0.0.26] - 2025-02-23
 - Add unique sorting to unpublished content extraction
@@ -36,7 +44,6 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 - Optimize changelog update process with conditional version insertion
 - Improve error handling and output messaging
 ## [0.0.15] - 2025-02-23
-### Adicionado
 - Add Copyable component for IP address copying
 - Implement Copyable component for easy IP address copying
 - Replace manual clipboard handling with reusable Copyable component
