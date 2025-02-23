@@ -71,7 +71,7 @@ DATE=$(date +%Y-%m-%d)
 
 # Verifica se há conteúdo entre [Não publicado] e a próxima versão
 NEXT_VERSION_LINE=$(grep -n "## \[[0-9]" CHANGELOG.md | head -n 1 | cut -d: -f1)
-UNPUBLISHED_CONTENT=$(sed -n "/## \[Não publicado\]/,${NEXT_VERSION_LINE}p" CHANGELOG.md | grep -v "## \[" | grep -v "^$" || true)
+UNPUBLISHED_CONTENT=$(sed -n "/## \[Não publicado\]/,${NEXT_VERSION_LINE}p" CHANGELOG.md | grep -v "## \[" | grep -v "^$" | sort -u || true)
 
 # Verifica se a versão no package.json corresponde à última versão no changelog
 CHANGELOG_VERSION=$(grep -oP "## \[\K[0-9]+\.[0-9]+\.[0-9]+" CHANGELOG.md | head -n 1)
@@ -101,6 +101,9 @@ if [ "$PACKAGE_VERSION" != "$CHANGELOG_VERSION" ]; then
     
     # Adiciona o resto do changelog (versões anteriores)
     sed -n '/## \[[0-9]/,$p' CHANGELOG.md >> "$TMP_FILE"
+    
+    # Remove entradas duplicadas
+    awk '!seen[$0]++' "$TMP_FILE" > "$TMP_FILE.tmp" && mv "$TMP_FILE.tmp" "$TMP_FILE"
     
     # Substitui o changelog antigo
     mv "$TMP_FILE" CHANGELOG.md

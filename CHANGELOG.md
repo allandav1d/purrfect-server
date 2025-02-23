@@ -4,8 +4,17 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 ## [Não publicado]
-## [0.0.22] - 2025-02-23
+
 ### Alterado
+- **hooks**: Optimize changelog deduplication and sorting
+
+- Add unique sorting to unpublished content extraction
+- Implement deduplication of changelog entries during version update
+- Improve changelog management to prevent duplicate entries
+## [0.0.24] - 2025-02-23
+### Alterado
+- Atualização de versão para 0.0.24
+## [0.0.22] - 2025-02-23
 - Atualização de versão para 0.0.22
 ## [0.0.20] - 2025-02-23
 - **hooks**: Simplify changelog version update logic
