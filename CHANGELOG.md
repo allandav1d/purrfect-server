@@ -6,9 +6,15 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 
 ## [Não publicado]
 
+## [0.0.20] - 2025-02-23
 ### Alterado
 - **hooks**: Simplify changelog version update logic
-
+- Modify pre-push hook to streamline changelog version synchronization
+- Improve version insertion with default entry when no unpublished content exists
+- Optimize changelog update process with clearer version handling
+- Ensure consistent changelog formatting for version updates
+### Alterado
+- **hooks**: Simplify changelog version update logic
 - Modify pre-push hook to streamline changelog version synchronization
 - Improve version insertion with default entry when no unpublished content exists
 - Optimize changelog update process with clearer version handling
