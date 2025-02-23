@@ -6,6 +6,15 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 
 ## [Não publicado]
 
+## [0.0.15] - 2025-02-23
+### Adicionado
+- Add Copyable component for IP address copying
+- Implement Copyable component for easy IP address copying
+- Replace manual clipboard handling with reusable Copyable component
+- Update domains and network info pages to use new Copyable component
+- Remove console.log statements from domains router
+- Enhance user experience with consistent IP address copying functionality
+
 ## [0.0.14] - 2025-02-23
 ### Adicionado
 - **hooks**: Improve changelog management in pre-push hook
