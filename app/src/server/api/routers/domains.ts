@@ -5,7 +5,6 @@ import { eq } from "drizzle-orm"
 import dns from "dns"
 import { promisify } from "util"
 
-const lookup = promisify(dns.lookup)
 const resolve4 = promisify(dns.resolve4)
 const resolve6 = promisify(dns.resolve6)
 const reverse = promisify(dns.reverse)
@@ -52,17 +51,17 @@ export const domainsRouter = createTRPCRouter({
         })
 
         const serverIpv4 =
-          serverSettings.find((s) => s.key === "server_ipv4")?.value ||
+          serverSettings.find((s) => s.key === "server_ipv4")?.value ??
           "localhost"
         const serverIpv6 =
-          serverSettings.find((s) => s.key === "server_ipv6")?.value ||
+          serverSettings.find((s) => s.key === "server_ipv6")?.value ??
           "localhost"
 
         // Verificar IPv4
         let ipv4Status = "failed"
         try {
           const ipv4Addresses = await resolve4(domain.domain)
-          ipv4Status = ipv4Addresses.includes(serverIpv4 || "")
+          ipv4Status = ipv4Addresses.includes(serverIpv4 ?? "")
             ? "active"
             : "failed"
         } catch (error) {

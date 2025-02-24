@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input"
 import { toast } from "sonner"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
-import { Mail, Send } from "lucide-react"
+import { Send } from "lucide-react"
 
 export function EmailTab() {
   const utils = api.useUtils()
@@ -29,7 +29,7 @@ export function EmailTab() {
 
   const [testEmail, setTestEmail] = useState("")
 
-  const smtpSettings = settings?.filter((s) => s.key.startsWith("smtp_")) || []
+  const smtpSettings = settings?.filter((s) => s.key.startsWith("smtp_")) ?? []
 
   const handleTestEmail = async () => {
     toast.info("Enviando email de teste...")
@@ -53,7 +53,7 @@ export function EmailTab() {
                 id="smtp_host"
                 placeholder="smtp.exemplo.com"
                 value={
-                  smtpSettings.find((s) => s.key === "smtp_host")?.value || ""
+                  smtpSettings.find((s) => s.key === "smtp_host")?.value ?? ""
                 }
                 onChange={(e) =>
                   updateSetting.mutate({
@@ -71,7 +71,7 @@ export function EmailTab() {
                 type="number"
                 placeholder="587"
                 value={
-                  smtpSettings.find((s) => s.key === "smtp_port")?.value || ""
+                  smtpSettings.find((s) => s.key === "smtp_port")?.value ?? ""
                 }
                 onChange={(e) =>
                   updateSetting.mutate({
@@ -88,7 +88,7 @@ export function EmailTab() {
                 id="smtp_user"
                 placeholder="user@exemplo.com"
                 value={
-                  smtpSettings.find((s) => s.key === "smtp_user")?.value || ""
+                  smtpSettings.find((s) => s.key === "smtp_user")?.value ?? ""
                 }
                 onChange={(e) =>
                   updateSetting.mutate({
@@ -106,7 +106,7 @@ export function EmailTab() {
                 type="password"
                 placeholder="••••••••"
                 value={
-                  smtpSettings.find((s) => s.key === "smtp_password")?.value ||
+                  smtpSettings.find((s) => s.key === "smtp_password")?.value ?? 
                   ""
                 }
                 onChange={(e) =>

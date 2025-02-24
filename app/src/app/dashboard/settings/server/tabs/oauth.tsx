@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input"
 import { toast } from "sonner"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
-import { Eye, EyeOff, Github } from "lucide-react"
+import { Eye, EyeOff } from "lucide-react"
 
 export function OAuthTab() {
   const utils = api.useUtils()
@@ -62,7 +62,7 @@ export function OAuthTab() {
               <Input
                 id="github_client_id"
                 value={
-                  settings?.find((s) => s.key === "github_client_id")?.value ||
+                  settings?.find((s) => s.key === "github_client_id")?.value ??
                   ""
                 }
                 onChange={(e) =>
@@ -82,7 +82,7 @@ export function OAuthTab() {
                   type={showSecrets ? "text" : "password"}
                   value={
                     settings?.find((s) => s.key === "github_client_secret")
-                      ?.value || ""
+                      ?.value ?? ""
                   }
                   onChange={(e) =>
                     updateSetting.mutate({
@@ -141,7 +141,7 @@ export function OAuthTab() {
               <Input
                 id="google_client_id"
                 value={
-                  settings?.find((s) => s.key === "google_client_id")?.value ||
+                  settings?.find((s) => s.key === "google_client_id")?.value ??
                   ""
                 }
                 onChange={(e) =>
@@ -161,7 +161,7 @@ export function OAuthTab() {
                   type={showSecrets ? "text" : "password"}
                   value={
                     settings?.find((s) => s.key === "google_client_secret")
-                      ?.value || ""
+                      ?.value ?? ""
                   }
                   onChange={(e) =>
                     updateSetting.mutate({

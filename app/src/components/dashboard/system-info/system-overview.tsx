@@ -21,7 +21,7 @@ function formatUptime(uptime: number) {
   if (hours > 0) parts.push(`${hours}h`)
   if (minutes > 0) parts.push(`${minutes}m`)
 
-  return parts.join(" ") || "< 1m"
+  return parts.join(" ") ?? "< 1m"
 }
 
 export function SystemOverview() {
@@ -128,7 +128,7 @@ export function SystemOverview() {
             <h3 className="mb-2 text-sm font-medium">Build-in Versions</h3>
             <div className="grid gap-2 text-sm">
               <div className="flex flex-wrap justify-start gap-2">
-                {Object.entries(data?.versions || {})
+                {Object.entries(data?.versions ?? {})
                   ?.filter(([key, value]) => value !== "")
                   ?.map(([key, value]) => (
                     <Badge

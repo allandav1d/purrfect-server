@@ -94,7 +94,7 @@ export function ConfigurationTab() {
     try {
       // Garante que todos os valores são strings e remove espaços em branco
       const settingsToUpdate = Object.entries(data).map(([key, value]) => {
-        const stringValue = String(value || "").trim()
+        const stringValue = String(value ?? "").trim()
         console.log(`Preparando setting - Key: ${key}, Value: ${stringValue}`)
 
         // Busca as informações padrão da configuração

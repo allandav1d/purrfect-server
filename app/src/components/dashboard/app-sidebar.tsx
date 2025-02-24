@@ -2,9 +2,6 @@
 
 import * as React from "react"
 import {
-  BookOpen,
-  Bot,
-  Command,
   Frame,
   LifeBuoy,
   Map,
@@ -28,9 +25,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { api } from "@/trpc/react"
-import { Suspense } from "react"
-import { Skeleton } from "@/components/ui/skeleton"
 import Image from "next/image"
 
 const data = {

@@ -7,6 +7,7 @@ import {
   unstable_httpBatchStreamLink,
   unstable_httpSubscriptionLink,
 } from "@trpc/client"
+import type { Operation } from "@trpc/client"
 import { createTRPCReact } from "@trpc/react-query"
 import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server"
 import { useState } from "react"
@@ -54,7 +55,7 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
         }),
         splitLink({
           // uses the httpSubscriptionLink for subscriptions
-          condition: (op: any) => op.type === "subscription",
+          condition: (op: Operation) => op.type === "subscription",
           true: unstable_httpSubscriptionLink({
             connectionParams: () => {
               const headers = new Headers()

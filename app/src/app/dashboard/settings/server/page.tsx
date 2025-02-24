@@ -1,20 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { api } from "@/trpc/react"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { toast } from "sonner"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Pencil, Save, X, Mail, Database, Key } from "lucide-react"
-import { Textarea } from "@/components/ui/textarea"
+import { Mail, Database, Key } from "lucide-react"
 import { ConfigurationTab } from "./tabs/configuration"
 import { EmailTab } from "./tabs/email"
 import { BackupTab } from "./tabs/backup"

@@ -48,7 +48,7 @@ export function CpuInfo() {
           <div className="space-y-2">
             <div className="flex items-center justify-between text-sm">
               <span>Temperatura</span>
-              <span>{data.temperature[0]?.toFixed(1) || "N/A"}°C</span>
+              <span>{data.temperature[0]?.toFixed(1) ?? "N/A"}°C</span>
             </div>
             <Progress
               value={(data.temperature[0] ?? 0 / 100) * 100}

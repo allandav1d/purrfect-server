@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import { api } from "@/trpc/react"
 import {
   Card,
@@ -21,7 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Database, Download, Upload } from "lucide-react"
+import { Download, Upload } from "lucide-react"
 
 export function BackupTab() {
   const utils = api.useUtils()

@@ -77,9 +77,9 @@ const initializeRouter = publicProcedure
       key: "main_domain",
       value:
         "http://" +
-        (defaultInterface?.ip4 || defaultInterface?.ip6) +
+        (defaultInterface?.ip4 ?? defaultInterface?.ip6) +
         ":" +
-        (process.env.SERVER_PORT || 3000),
+        (process.env.SERVER_PORT ?? 3000),
       type: "string",
       description: "Domínio principal do servidor",
       isSystem: true,

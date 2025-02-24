@@ -1,13 +1,10 @@
 "use client"
 
-import { useEffect } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { api } from "@/trpc/react"
-import { SystemOverview } from "./system-overview"
 import { CpuInfo } from "./cpu-info"
 import { MemoryInfo } from "./memory-info"
 import { NetworkInfo } from "./network-info"
 import { DiskInfo } from "./disk-info"
+import { SystemOverview } from "./system-overview"
 export function SystemInfo() {
   return (
     <>
@@ -23,7 +20,6 @@ export function SystemInfo() {
 
       <div className="w-full">
         <DiskInfo />
-        {/* <DockerInfo /> */}
       </div>
     </>
   )

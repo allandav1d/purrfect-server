@@ -13,7 +13,7 @@ export function MemoryInfo() {
       },
     })
 
-  const { mem } = data || {}
+  const { mem } = data ?? {}
 
   if (!mem) {
     return (
@@ -51,9 +51,9 @@ export function MemoryInfo() {
     )
   }
 
-  const memoryUsage = ((mem?.active || 0) / (mem?.total || 0)) * 100
+  const memoryUsage = ((mem?.active ?? 0) / (mem?.total ?? 0)) * 100
   const swapUsage = mem?.swaptotal
-    ? ((mem?.swapused || 0) / (mem?.swaptotal || 0)) * 100
+    ? ((mem?.swapused ?? 0) / (mem?.swaptotal ?? 0)) * 100
     : 0
 
   return (

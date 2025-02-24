@@ -6,40 +6,35 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 ## [Não publicado]
 
 ### Alterado
-- **domains**: Simplify domain table layout and remove unused columns
+- Clean up imports and remove unused code across multiple components
 
-- Remove DNS Reverso column from domains table
+- Remove unnecessary imports from various files
+- Replace `||` with nullish coalescing operator `??`
+- Remove commented-out code and unused variables
+- Simplify error handling in login forms
+- Optimize type handling and null checks
+## [0.0.32] - 2025-02-24
+- Add domain validation with regex and error handling
+- Add input validation for domain entry
+### Adicionado
 - Adjust table content padding
+### Alterado
 - Commented out unused DNS status column
+- **domains**: Enhance domain management with validation and confirmation
+- **domains**: Simplify domain table layout and remove unused columns
+- Implement domain deletion confirmation dialog
+- Improve UI with breadcrumbs and tutorial dialog
+- Refactor domain management page layout and interactions
+- Remove DNS Reverso column from domains table
 - Update README to mark simple domain management as completed
-
-### Adicionado
-- **domains**: Enhance domain management with validation and confirmation
-
-- Add domain validation with regex and error handling
-- Implement domain deletion confirmation dialog
-- Improve UI with breadcrumbs and tutorial dialog
-- Add input validation for domain entry
-- Refactor domain management page layout and interactions
-
-### Adicionado
-- **domains**: Enhance domain management with validation and confirmation
-
-- Add domain validation with regex and error handling
-- Implement domain deletion confirmation dialog
-- Improve UI with breadcrumbs and tutorial dialog
-- Add input validation for domain entry
-- Refactor domain management page layout and interactions
 ## [0.0.28] - 2025-02-23
 - Add `check_sync()` function to improve remote branch synchronization logic
 - Add final synchronization verification before push
-### Adicionado
 - **hooks**: Enhance pre-push synchronization checks
 - Implement detailed branch status checks with color-coded output
 - Improve error handling for branch synchronization scenarios
 ## [0.0.26] - 2025-02-23
 - Add unique sorting to unpublished content extraction
-### Alterado
 - **hooks**: Optimize changelog deduplication and sorting
 - Implement deduplication of changelog entries during version update
 - Improve changelog management to prevent duplicate entries

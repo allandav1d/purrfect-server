@@ -36,9 +36,9 @@ export function DiskInfo() {
       },
     })
 
-  const fs = data?.fsSize || []
-  const disks = data?.diskLayout || []
-  const blockDevices = data?.blockDevices || []
+  const fs = data?.fsSize ?? []
+  const disks = data?.diskLayout ?? []
+  const blockDevices = data?.blockDevices ?? []
 
   if (!disks.length) return null
 
@@ -61,7 +61,7 @@ export function DiskInfo() {
           used: fsInfo?.used,
           available: fsInfo?.available,
           use: fsInfo?.use,
-          mount: fsInfo?.mount || block.mount,
+          mount: fsInfo?.mount ?? block.mount,
         }
       })
 
@@ -80,8 +80,8 @@ export function DiskInfo() {
       if (b.fs === "/") return 1
 
       // Se não tiver fs, usa o device para comparação
-      const aCompare = a.fs || a.device
-      const bCompare = b.fs || b.device
+      const aCompare = a.fs ?? a.device
+      const bCompare = b.fs ?? b.device
 
       return aCompare.localeCompare(bCompare)
     }),
@@ -124,7 +124,7 @@ export function DiskInfo() {
                             {" "}
                             •{" "}
                             <span className="text-xs text-muted-foreground">
-                              {partition.type || "N/A"}
+                              {partition.type ?? "N/A"}
                             </span>
                           </>
                         )}
@@ -162,7 +162,7 @@ export function DiskInfo() {
                           Usado: {partition.use.toFixed(1)}%
                         </div>
                         <div className="col-span-5">
-                          Livre: {formatBytes(partition.available || 0)}
+                          Livre: {formatBytes(partition.available ?? 0)}
                         </div>
                       </>
                     )}

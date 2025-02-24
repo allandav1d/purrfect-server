@@ -4,11 +4,9 @@ import {
   BadgeCheck,
   Bell,
   ChevronsUpDown,
-  CreditCard,
   LogOut,
   Moon,
   Sun,
-  Sparkles,
 } from "lucide-react"
 import { useTheme } from "next-themes"
 import { signOut } from "next-auth/react"
@@ -60,18 +58,18 @@ export function NavUser() {
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage
-                  src={user?.image || ""}
-                  alt={user?.name || "Avatar"}
+                  src={user?.image ?? ""}
+                  alt={user?.name ?? "Avatar"}
                 />
                 <AvatarFallback className="rounded-lg">
-                  {user?.name?.slice(0, 2).toUpperCase() || "UN"}
+                  {user?.name?.slice(0, 2).toUpperCase() ?? "UN"}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">
-                  {user?.name || "Usuário"}
+                  {user?.name ?? "Usuário"}
                 </span>
-                <span className="truncate text-xs">{user?.email || ""}</span>
+                <span className="truncate text-xs">{user?.email ?? ""}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -86,18 +84,18 @@ export function NavUser() {
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage
-                    src={user?.image || ""}
-                    alt={user?.name || "Avatar"}
+                    src={user?.image ?? ""}
+                    alt={user?.name ?? "Avatar"}
                   />
                   <AvatarFallback className="rounded-lg">
-                    {user?.name?.slice(0, 2).toUpperCase() || "UN"}
+                    {user?.name?.slice(0, 2).toUpperCase() ?? "UN"}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">
-                    {user?.name || "Usuário"}
+                    {user?.name ?? "Usuário"}
                   </span>
-                  <span className="truncate text-xs">{user?.email || ""}</span>
+                  <span className="truncate text-xs">{user?.email ?? ""}</span>
                 </div>
               </div>
             </DropdownMenuLabel>

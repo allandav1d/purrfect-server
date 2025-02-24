@@ -20,7 +20,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { toast } from "sonner"
-import { ChevronDown, Info } from "lucide-react"
+import { Info } from "lucide-react"
 import {
   Select,
   SelectContent,
@@ -58,8 +58,6 @@ import { Separator } from "@/components/ui/separator"
 import {
   Breadcrumb,
   BreadcrumbLink,
-  BreadcrumbSeparator,
-  BreadcrumbPage,
   BreadcrumbItem,
   BreadcrumbList,
 } from "@/components/ui/breadcrumb"
@@ -107,7 +105,7 @@ export default function DomainsPage() {
   const [tutorialOpen, setTutorialOpen] = useState(false)
   const utils = api.useUtils()
 
-  const { data: domains, isLoading } = api.domains.getAll.useQuery()
+  const { data: domains } = api.domains.getAll.useQuery()
 
   // get server ipv4 and ipv6
   const { data: serverSettings } = api.settings.get.useQuery({
@@ -373,7 +371,7 @@ export default function DomainsPage() {
                 </div>
                 <Button
                   type="submit"
-                  disabled={!!domainError || createDomain.isLoading}
+                  disabled={!!domainError || createDomain.isPending}
                 >
                   Adicionar
                 </Button>

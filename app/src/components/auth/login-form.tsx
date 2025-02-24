@@ -44,6 +44,7 @@ export function LoginForm() {
       router.push("/dashboard")
       router.refresh()
     } catch (error) {
+      console.error(error)
       setError("Ocorreu um erro ao fazer login")
     } finally {
       setIsLoading(false)
